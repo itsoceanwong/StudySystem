@@ -182,18 +182,15 @@
         const firebaseConfig = {
             apiKey: "AIzaSyBpgQN6lxrVQvGx3bcBfoEsPeao1U6jYoU",
             authDomain: "studysysten.firebaseapp.com",
+            databaseURL: "https://studysysten-default-rtdb.firebaseio.com", // ⚠️ 新增了這行！這是資料庫的靈魂
             projectId: "studysysten",
             storageBucket: "studysysten.firebasestorage.app",
             messagingSenderId: "625298921580",
             appId: "1:625298921580:web:3bc28bb2d449ad6c132049",
-            measurementId: "G-T21Z1GL1LK" // 新增了這行分析追蹤 ID
+            measurementId: "G-T21Z1GL1LK"
         };
         
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
-        const googleProvider = new firebase.auth.GoogleAuthProvider();
-        
+        // ⚠️ 請確保這四行「絕對沒有」被不小心刪掉！
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.database();
@@ -203,7 +200,7 @@
         let currentUser = null;
         let currentSubjectId = null;
         let currentProblems = {};
-        let currentQuizList = [];
+        // ... (下方保留你原本的程式碼，如 let currentQuizList 等)
         let quizIndex = 0;
         let cachedAdminProblems = {};
         let currentEditingProblemId = null;
