@@ -82,12 +82,12 @@
                 <span id="dash-type-name" class="font-bold text-gray-700 dark:text-gray-300"></span>
             </div>
             
-            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-6 mb-8 text-white shadow-lg flex justify-between items-center">
+<div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-6 mb-8 text-white shadow-lg flex justify-between items-center">
                 <div>
                     <h3 class="text-xl font-bold mb-1">🎲 終極挑戰</h3>
-                    <p class="text-sm opacity-90">從題庫中隨機抽取 10 題進行綜合測驗</p>
+                    <p class="text-sm opacity-90">隨機打亂並測驗題庫中的所有題目</p>
                 </div>
-                <button onclick="startQuiz('random')" class="bg-white text-blue-600 px-6 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">隨機抽題</button>
+                <button onclick="startQuiz('random')" class="bg-white text-blue-600 px-6 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">隨機全部作答</button>
             </div>
 
             <h2 class="text-xl font-bold mb-4 border-b dark:border-gray-700 pb-2">或 按課題分類溫習</h2>
@@ -371,12 +371,13 @@ const firebaseConfig = {
         }
 
         // ========== 前端：4. 測驗系統 (支援隨機與分題型) ==========
-        function startQuiz(mode) {
+function startQuiz(mode) {
             let list = Object.entries(currentProblems).map(([id, p]) => ({ id, ...p }));
             
             if (mode === 'random') {
-                list = list.sort(() => Math.random() - 0.5).slice(0, 10); // 隨機抽 10 題
-                document.getElementById('question-topic-label').innerText = "隨機測驗";
+                // 移除 .slice(0, 10) 即可保留所有題目，僅做隨機打亂
+                list = list.sort(() => Math.random() - 0.5); 
+                document.getElementById('question-topic-label').innerText = "隨機綜合測驗 (全部題目)";
             } else {
                 list = list.filter(p => p.topic === mode); // 按課題篩選
                 document.getElementById('question-topic-label').innerText = mode;
@@ -389,7 +390,7 @@ const firebaseConfig = {
             renderQuestion();
             showView('quiz-view');
         }
-
+            
         function renderQuestion() {
             const p = currentQuizList[quizIndex];
             document.getElementById('quiz-progress-text').innerText = `${quizIndex + 1} / ${currentQuizList.length}`;
