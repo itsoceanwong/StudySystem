@@ -93,8 +93,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-6 text-white shadow-lg flex justify-between items-center">
                     <div>
-                        <h3 class="text-xl font-bold mb-1">🎲 隨機挑戰</h3>
-                        <p class="text-sm opacity-90">抽取尚未作答的新題目</p>
+                        <h3 class="text-xl font-bold mb-1">🎲 隨機未答</h3>
+                        <p class="text-sm opacity-90">抽取尚未作答過的新題目</p>
                     </div>
                     <button onclick="startQuiz('random')" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">開始</button>
                 </div>
@@ -103,7 +103,14 @@
                         <h3 class="text-xl font-bold mb-1">📝 錯題本</h3>
                         <p class="text-sm opacity-90">針對曾答錯的題目集中特訓</p>
                     </div>
-                    <button onclick="startQuiz('mistakes')" class="bg-white text-red-600 px-4 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">立即重溫</button>
+                    <button onclick="startQuiz('mistakes')" class="bg-white text-red-600 px-4 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">重溫</button>
+                </div>
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-6 text-white shadow-lg flex justify-between items-center md:col-span-2">
+                    <div>
+                        <h3 class="text-xl font-bold mb-1">🔄 總複習 (全題庫)</h3>
+                        <p class="text-sm opacity-90">隨機抽取所有題目（包含已答），適合考前無限次衝刺</p>
+                    </div>
+                    <button onclick="startQuiz('random-all')" class="bg-white text-teal-600 px-6 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">重新挑戰全題庫</button>
                 </div>
             </div>
 
@@ -158,7 +165,7 @@
                 <h2 class="text-2xl font-bold">⚙️ 管理員後台</h2>
                 <div class="flex bg-gray-100 dark:bg-gray-900 p-1 rounded-xl">
                     <button onclick="switchAdminTab('problems')" id="tab-btn-problems" class="px-4 py-2 rounded-lg text-sm font-bold transition">題庫管理</button>
-                    <button onclick="switchAdminTab('users')" id="tab-btn-users" class="px-4 py-2 rounded-lg text-sm font-bold transition">用戶數據</button>
+                    <button onclick="switchAdminTab('users')" id="tab-btn-users" class="px-4 py-2 rounded-lg text-sm font-bold transition">用戶數據 & 權限</button>
                 </div>
             </div>
 
@@ -201,20 +208,22 @@
 
             <div id="admin-users-section" class="hidden">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-bold">學生成績總覽</h3>
-                    <button onclick="loadAdminUsersProgress()" class="text-sm text-blue-500 hover:underline">🔄 刷新</button>
+                    <h3 class="text-lg font-bold">帳戶權限與成績總覽</h3>
+                    <button onclick="loadAdminUsersProgress()" class="text-sm text-blue-500 hover:underline font-bold">🔄 刷新</button>
                 </div>
-                <table class="min-w-full text-sm text-left border dark:border-gray-700 rounded-xl">
-                    <thead class="bg-gray-50 dark:bg-gray-900">
-                        <tr>
-                            <th class="px-4 py-4 font-bold">用戶</th>
-                            <th class="px-4 py-4 font-bold text-center">總作答</th>
-                            <th class="px-4 py-4 font-bold text-center">答對數</th>
-                            <th class="px-4 py-4 font-bold text-center">正確率</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-users-list" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody>
-                </table>
+                <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-700">
+                    <table class="min-w-full text-sm text-left">
+                        <thead class="bg-gray-50 dark:bg-gray-900 border-b dark:border-gray-700">
+                            <tr>
+                                <th class="px-4 py-4 font-bold">用戶</th>
+                                <th class="px-4 py-4 font-bold text-center">目前角色</th>
+                                <th class="px-4 py-4 font-bold text-center">總作答</th>
+                                <th class="px-4 py-4 font-bold text-center">正確率</th>
+                                <th class="px-4 py-4 font-bold text-center">操作</th> </tr>
+                        </thead>
+                        <tbody id="admin-users-list" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </main>
@@ -304,7 +313,7 @@
             "sub_econ": { name: "經濟", icon: "📈", color: "purple" }
         };
 
-        // ========== 主題切換 (Dark Mode) ==========
+        // ========== 主題切換 ==========
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
@@ -316,7 +325,6 @@
             document.getElementById('theme-toggle').innerText = '🌙';
         }
 
-        // ========== 視圖導航與狀態保存 (State Persistence) ==========
         function showView(viewId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
@@ -325,13 +333,12 @@
         
         function goHome() { 
             if(currentUser) {
-                sessionStorage.removeItem('quizState'); // 回主頁清理快取
+                sessionStorage.removeItem('quizState'); 
                 loadUserProgress();
                 showView('home-view');
             } else { showView('login-view'); }
         }
 
-        // 自動保存測驗進度，防止重新整理流失
         function saveQuizState() {
             if (currentQuizList.length > 0) {
                 sessionStorage.setItem('quizState', JSON.stringify({
@@ -373,7 +380,6 @@
                 
                 renderSubjectSelection();
                 
-                // 檢查是否有未完成的測驗進度
                 if (!restoreQuizState()) {
                     loadUserProgress();
                     showView('home-view');
@@ -385,7 +391,6 @@
             }
         });
 
-        // 讀取個人總成績
         async function loadUserProgress() {
             if (!currentUser) return;
             const snap = await db.ref(`submissions/${currentUser.uid}`).once('value');
@@ -443,18 +448,21 @@
             });
         }
 
-        // ========== 測驗系統核心 ==========
+        // ========== 測驗系統 ==========
         async function startQuiz(mode) {
             const snap = await db.ref(`submissions/${currentUser.uid}`).once('value');
             const userSubs = snap.val() || {};
             let list = Object.entries(currentProblems).map(([id, p]) => ({ id, ...p }));
             
             if (mode === 'random') {
-                list = list.filter(p => !userSubs[p.id]); // 只抓未作答
-                list = list.sort(() => Math.random() - 0.5).slice(0, 20); // 避免過載，上限20題
+                list = list.filter(p => !userSubs[p.id]); 
+                list = list.sort(() => Math.random() - 0.5).slice(0, 20); 
                 document.getElementById('question-topic-label').innerText = "隨機未答題目";
+            } else if (mode === 'random-all') {
+                list = list.sort(() => Math.random() - 0.5).slice(0, 20); 
+                document.getElementById('question-topic-label').innerText = "總複習 (全題庫隨機)";
             } else if (mode === 'mistakes') {
-                list = list.filter(p => userSubs[p.id] && userSubs[p.id].isCorrect === false); // 只抓錯題
+                list = list.filter(p => userSubs[p.id] && userSubs[p.id].isCorrect === false); 
                 list = list.sort(() => Math.random() - 0.5);
                 document.getElementById('question-topic-label').innerText = "錯題重溫";
             } else {
@@ -463,7 +471,13 @@
             }
             
             if(list.length === 0) { 
-                alert(mode === 'mistakes' ? "太棒了！你目前沒有任何錯題紀錄。" : "沒有符合條件的題目！"); 
+                if (mode === 'random') {
+                    if(confirm("🎉 太棒了！你已經完成了所有未作答的題目！\n\n是否要切換至「總複習模式」重新挑戰全題庫？")) startQuiz('random-all');
+                } else if (mode === 'mistakes') {
+                    alert("太棒了！你目前沒有任何錯題紀錄。"); 
+                } else {
+                    alert("此課題沒有可用的題目！"); 
+                }
                 return; 
             }
 
@@ -479,14 +493,13 @@
             document.getElementById('quiz-progress-text').innerText = `${quizIndex + 1} / ${currentQuizList.length}`;
             document.getElementById('question-text').innerText = p.question;
             
-            // 處理圖片顯示
             const imgEl = document.getElementById('question-image');
             if(p.imageUrl) { imgEl.src = p.imageUrl; imgEl.classList.remove('hidden'); }
             else { imgEl.classList.add('hidden'); }
 
             document.getElementById('feedback-area').classList.add('hidden');
             document.getElementById('btn-prev').classList.toggle('hidden', quizIndex === 0);
-            document.getElementById('btn-next').classList.add('hidden'); // 答題後才顯示下一題
+            document.getElementById('btn-next').classList.add('hidden'); 
             
             const mcqContainer = document.getElementById('options-container');
             const lqContainer = document.getElementById('lq-container');
@@ -508,7 +521,6 @@
             }
         }
 
-        // MCQ 批改
         function checkMCQAnswer(selectedIdx) {
             const p = currentQuizList[quizIndex];
             const isCorrect = selectedIdx === p.correctOptionIndex;
@@ -529,25 +541,21 @@
             db.ref(`submissions/${currentUser.uid}/${p.id}`).update({ isCorrect, type: 'mcq', lastAttemptAt: Date.now() });
         }
 
-        // LQ 自我評估模式 (不再是假批改)
         function showLQAnswer() {
             const p = currentQuizList[quizIndex];
-            document.getElementById('lq-show-ans-btn').classList.add('hidden'); // 隱藏按鈕
-            showFeedback(null, p, true); // 顯示解析與自我評分區塊
+            document.getElementById('lq-show-ans-btn').classList.add('hidden');
+            showFeedback(null, p, true); 
         }
 
         function submitLQSelfGrade(isCorrect) {
             const p = currentQuizList[quizIndex];
-            document.getElementById('lq-self-grade-area').classList.add('hidden'); // 隱藏評分按鈕
-            
-            // 寫入真實成績
+            document.getElementById('lq-self-grade-area').classList.add('hidden'); 
             db.ref(`submissions/${currentUser.uid}/${p.id}`).update({ isCorrect, type: 'lq', lastAttemptAt: Date.now() });
             
-            // UI 回饋
             const result = document.getElementById('feedback-result');
             result.innerText = isCorrect ? "✅ 已記錄為答對" : "❌ 已記錄為答錯 (將收錄至錯題本)";
             result.className = isCorrect ? "font-bold text-green-600 mb-2" : "font-bold text-red-500 mb-2";
-            document.getElementById('btn-next').classList.remove('hidden'); // 允許下一題
+            document.getElementById('btn-next').classList.remove('hidden'); 
         }
 
         function showFeedback(isCorrect, p, isLQ = false) {
@@ -560,8 +568,8 @@
                 feedback.className = "mt-8 p-6 rounded-xl border-l-4 bg-purple-50 dark:bg-purple-900/20 border-purple-500";
                 result.className = "font-bold text-lg mb-2 text-purple-700 dark:text-purple-400";
                 result.innerText = "💡 參考答案：請誠實評估你的作答是否正確。";
-                document.getElementById('lq-self-grade-area').classList.remove('hidden'); // 顯示評估按鈕
-                document.getElementById('btn-next').classList.add('hidden'); // 強制先評分才能下一步
+                document.getElementById('lq-self-grade-area').classList.remove('hidden'); 
+                document.getElementById('btn-next').classList.add('hidden'); 
             } else {
                 document.getElementById('btn-next').classList.remove('hidden');
                 if (isCorrect) {
@@ -582,16 +590,19 @@
             if (quizIndex < currentQuizList.length) {
                 saveQuizState(); renderQuestion();
             } else {
-                alert("測驗完成！"); goHome();
+                sessionStorage.removeItem('quizState');
+                if (confirm("🎉 測驗完成！\n\n你要立刻再重新挑戰一次這組題目嗎？\n(點擊「確定」重新洗牌開始，點擊「取消」返回目錄)")) {
+                    currentQuizList = currentQuizList.sort(() => Math.random() - 0.5);
+                    quizIndex = 0;
+                    renderQuestion();
+                } else { showView('dashboard-view'); }
             }
         }
-        function prevQuestion() {
-            if(quizIndex > 0) { quizIndex--; saveQuizState(); renderQuestion(); }
-        }
+        
+        function prevQuestion() { if(quizIndex > 0) { quizIndex--; saveQuizState(); renderQuestion(); } }
         function exitQuiz() { if(confirm("確定要離開測驗嗎？目前的進度將會遺失。")) goHome(); }
 
-
-        // ========== 管理員後台邏輯 ==========
+        // ========== 管理員後台邏輯 (含權限管理) ==========
         function switchAdminTab(tab) {
             document.getElementById('admin-problems-section').classList.toggle('hidden', tab !== 'problems');
             document.getElementById('admin-users-section').classList.toggle('hidden', tab !== 'users');
@@ -621,15 +632,14 @@
                     <td class="px-4 py-4"><div class="font-bold">${p.topic}</div><div class="text-[10px] text-gray-400">${id}</div></td>
                     <td class="px-4 py-4 truncate max-w-[300px]">${p.question}</td>
                     <td class="px-4 py-4 text-center">
-                        <button onclick="showProblemEditor('${id}')" class="text-blue-500 mr-2 hover:underline">編輯</button>
-                        <button onclick="deleteProblem('${id}')" class="text-red-500 hover:underline">刪除</button>
+                        <button onclick="showProblemEditor('${id}')" class="text-blue-500 mr-2 hover:underline font-bold">編輯</button>
+                        <button onclick="deleteProblem('${id}')" class="text-red-500 hover:underline font-bold">刪除</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        // JSON 批次匯入功能
         function handleJSONImport(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -639,7 +649,6 @@
                     const data = JSON.parse(e.target.result);
                     const sid = document.getElementById('admin-subject-filter').value;
                     const type = document.getElementById('admin-type-filter').value;
-                    // 使用 update 避免覆蓋其他既有題目
                     await db.ref(`problems/${sid}/${type}`).update(data);
                     alert("✅ 題庫批次匯入成功！");
                     loadAdminProblems();
@@ -703,10 +712,8 @@
             const sid = document.getElementById('admin-subject-filter').value;
             const type = document.getElementById('admin-type-filter').value;
             
-            // 刪除題目
             await db.ref(`problems/${sid}/${type}/${pid}`).remove();
             
-            // 解決孤兒數據缺陷：一併清理 submissions 中的紀錄 (簡易版全表掃描清理)
             const subsRef = db.ref('submissions');
             const subsSnap = await subsRef.once('value');
             if(subsSnap.exists()){
@@ -717,6 +724,28 @@
             loadAdminProblems();
         }
 
+        // ========== 新增：變更帳戶權限 ==========
+        async function changeUserRole(uid, newRole) {
+            if (!confirm(`確定要將該用戶設為「${newRole === 'admin' ? '管理員' : '一般用戶'}」嗎？`)) return;
+            try {
+                await db.ref(`users/${uid}`).update({ role: newRole });
+                loadAdminUsersProgress();
+            } catch (e) { alert("權限更新失敗：" + e.message); }
+        }
+
+        // ========== 新增：深度刪除用戶帳戶 ==========
+        async function deleteUserAccount(uid, userName) {
+            if (!confirm(`⚠️ 警告：確定要徹底刪除用戶「${userName}」的所有資料嗎？\n此操作將會刪除其權限與所有作答紀錄（無法復原）。`)) return;
+            try {
+                // 刪除用戶基本資料與權限
+                await db.ref(`users/${uid}`).remove();
+                // 刪除該用戶的所有作答歷史紀錄
+                await db.ref(`submissions/${uid}`).remove();
+                alert("用戶資料與學習紀錄已成功刪除！");
+                loadAdminUsersProgress();
+            } catch (e) { alert("刪除失敗：" + e.message); }
+        }
+
         async function loadAdminUsersProgress() {
             const list = document.getElementById('admin-users-list');
             list.innerHTML = '<tr><td colspan="5" class="p-10 text-center text-gray-400">數據計算中...</td></tr>';
@@ -724,6 +753,7 @@
                 const [usersSnap, subsSnap] = await Promise.all([ db.ref('users').once('value'), db.ref('submissions').once('value') ]);
                 const users = usersSnap.val() || {}; const allSubs = subsSnap.val() || {};
                 list.innerHTML = '';
+                
                 Object.values(users).forEach((u, index) => {
                     const uid = Object.keys(users)[index];
                     const userSubs = allSubs[uid] || {};
@@ -731,18 +761,34 @@
                     const correct = Object.values(userSubs).filter(s => s.isCorrect).length;
                     const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
                     
+                    // 權限防呆設計：判斷該行用戶是否為「目前登入的管理員本人」
+                    const isSelf = (uid === currentUser.uid);
+                    let actionHTML = '';
+                    
+                    if (isSelf) {
+                        actionHTML = '<span class="text-gray-400 text-xs font-bold bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">目前帳號 (防呆鎖定)</span>';
+                    } else {
+                        const roleBtn = u.role === 'admin' 
+                            ? `<button onclick="changeUserRole('${uid}', 'user')" class="text-orange-500 font-bold hover:underline text-xs bg-orange-50 dark:bg-gray-700 px-2 py-1 rounded border border-orange-200 dark:border-gray-600">降為用戶</button>`
+                            : `<button onclick="changeUserRole('${uid}', 'admin')" class="text-green-600 font-bold hover:underline text-xs bg-green-50 dark:bg-gray-700 px-2 py-1 rounded border border-green-200 dark:border-gray-600">升為管理員</button>`;
+                        
+                        const delBtn = `<button onclick="deleteUserAccount('${uid}', '${u.name || '未知'}')" class="text-red-500 font-bold hover:underline text-xs bg-red-50 dark:bg-gray-700 px-2 py-1 rounded border border-red-200 dark:border-gray-600">刪除帳戶</button>`;
+                        
+                        actionHTML = `<div class="flex justify-center space-x-2">${roleBtn}${delBtn}</div>`;
+                    }
+
                     const tr = document.createElement('tr');
                     tr.className = "border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800";
                     tr.innerHTML = `
                         <td class="px-4 py-4 font-bold">${u.name}<div class="text-[10px] text-gray-500">${u.email}</div></td>
-                        <td class="px-4 py-4 text-center text-xs">${u.role === 'admin' ? '⭐ 管理員' : '👤 用戶'}</td>
+                        <td class="px-4 py-4 text-center text-xs">${u.role === 'admin' ? '<span class="text-purple-600 font-bold bg-purple-100 dark:bg-purple-900/30 px-2 py-1 rounded-full">⭐ 管理員</span>' : '<span class="text-gray-500">👤 用戶</span>'}</td>
                         <td class="px-4 py-4 text-center">${attempted}</td>
-                        <td class="px-4 py-4 text-center text-green-500 font-bold">${correct}</td>
                         <td class="px-4 py-4 text-center font-bold ${accuracy > 60 ? 'text-blue-500' : 'text-red-500'}">${accuracy}%</td>
+                        <td class="px-4 py-4 text-center">${actionHTML}</td>
                     `;
                     list.appendChild(tr);
                 });
-            } catch(e) { list.innerHTML = '<tr><td colspan="5" class="p-10 text-center text-red-500">讀取失敗</td></tr>'; }
+            } catch(e) { list.innerHTML = '<tr><td colspan="5" class="p-10 text-center text-red-500">讀取失敗：權限不足或網路異常</td></tr>'; }
         }
     </script>
 </body>
