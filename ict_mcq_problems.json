@@ -1,5 +1,5 @@
 {
-  "sub_ict": {
+  "mcq": {
     "mcq_001": {
       "topic": "整除運算",
       "difficulty": "簡單",
@@ -230,7 +230,7 @@
       "question": "[3, 4, 5] 執行首輪選擇排序（找最小）後的結果。",
       "options": ["[3, 4, 5]", "[4, 3, 5]", "[5, 4, 3]", "[3, 5, 4]"],
       "correctOptionIndex": 1,
-      "explanation": "找到最小的 2 並與首位的 5 交換。"
+      "explanation": "找到最小的數並與首位交換。"
     },
     "mcq_030": {
       "topic": "偶數檢查",
@@ -399,6 +399,20 @@
       "options": ["while L < R:", "while L == R:", "while L <= R:", "while L != R:"],
       "correctOptionIndex": 2,
       "explanation": "當左邊界超過右邊界時，代表範圍已空，搜尋結束。"
+    }
+  },
+  "lq": {
+    "lq_001": {
+      "topic": "資料類型與變數",
+      "difficulty": "簡單",
+      "question": "請解釋 Python 中 List (串列) 和 Tuple (元組) 的主要分別，並各舉一個適合使用的情境。",
+      "explanation": "List 是可變的 (Mutable)，建立後可以修改、新增或刪除元素；Tuple 是不可變的 (Immutable)，建立後無法修改。\n\n使用情境：\nList 適合儲存會變動的資料（如學生成績名單）；Tuple 適合儲存固定的資料（如座標 x, y 或程式的常數設定）。"
+    },
+    "lq_002": {
+      "topic": "控制結構",
+      "difficulty": "中等",
+      "question": "在設計程式時，For 迴圈 (For loop) 和 While 迴圈 (While loop) 的應用場景有何不同？請簡述。",
+      "explanation": "For 迴圈：通常用於「已知執行次數」或「走訪序列（如陣列、字串）」的情況，屬於計數控制。\n\nWhile 迴圈：適用於「未知執行次數」，只要「特定條件成立」就會繼續執行的情況，屬於條件控制（例如不斷要求使用者重新輸入，直到密碼正確為止）。"
     }
   }
 }
