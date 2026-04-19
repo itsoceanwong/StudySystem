@@ -1,0 +1,404 @@
+{
+  "sub_ict": {
+    "mcq_001": {
+      "topic": "整除運算",
+      "difficulty": "簡單",
+      "question": "x = 7 // 2 執行後，x 的值是多少？",
+      "options": ["3.5", "3", "4", "1"],
+      "correctOptionIndex": 1,
+      "explanation": "// 是整除（Floor Division），只取商數的整數部分，不進位。"
+    },
+    "mcq_002": {
+      "topic": "數據類型選取",
+      "difficulty": "簡單",
+      "question": "若要儲存學生成績 85.5，應使用哪種 Python 數據類型？",
+      "options": ["int", "str", "float", "bool"],
+      "correctOptionIndex": 2,
+      "explanation": "包含小數點的數值必須使用浮點數（float）儲存。"
+    },
+    "mcq_003": {
+      "topic": "Range 範圍概念",
+      "difficulty": "簡單",
+      "question": "range(1, 5) 在迴圈中會產生哪些數字？",
+      "options": ["1, 2, 3, 4, 5", "1, 2, 3, 4", "2, 3, 4, 5", "0, 1, 2, 3, 4"],
+      "correctOptionIndex": 1,
+      "explanation": "Python 的 range(start, stop) 是「左閉右開」，不包含終點值 5。"
+    },
+    "mcq_004": {
+      "topic": "字串重複",
+      "difficulty": "簡單",
+      "question": "執行 print(\"ICT\" * 2) 的結果是什麼？",
+      "options": ["ICT2", "ICTICT", "Error", "ICT ICT"],
+      "correctOptionIndex": 1,
+      "explanation": "字串與整數相乘代表將該字串重複連接。"
+    },
+    "mcq_005": {
+      "topic": "邏輯判斷",
+      "difficulty": "簡單",
+      "question": "寫出檢查 age 是否大於 12 且小於 65 的 Python 條件式。",
+      "options": ["if age > 12 or age < 65:", "if age >= 12 and age <= 65:", "if age > 12 and age < 65:", "if 12 < age or age > 65:"],
+      "correctOptionIndex": 2,
+      "explanation": "使用 and 運算符連接兩個必須同時成立的條件。"
+    },
+    "mcq_006": {
+      "topic": "1D 陣列索引",
+      "difficulty": "簡單",
+      "question": "A = [10, 20, 30]，如何讀取數值 20？",
+      "options": ["A[1]", "A[2]", "A[0]", "A(1)"],
+      "correctOptionIndex": 0,
+      "explanation": "Python 陣列索引從 0 開始，索引 1 代表第二個元素。"
+    },
+    "mcq_007": {
+      "topic": "陣列長度",
+      "difficulty": "簡單",
+      "question": "如何取得陣列 L 的元素總數？",
+      "options": ["size(L)", "length(L)", "len(L)", "count(L)"],
+      "correctOptionIndex": 2,
+      "explanation": "len() 函數用於計算序列（列表或字串）的長度。"
+    },
+    "mcq_008": {
+      "topic": "For 迴圈次數",
+      "difficulty": "簡單",
+      "question": "for i in range(3): 內部的代碼會執行幾次？",
+      "options": ["2", "3", "4", "0"],
+      "correctOptionIndex": 1,
+      "explanation": "產生的數字是 0, 1, 2，總共 3 個。"
+    },
+    "mcq_009": {
+      "topic": "不等於符號",
+      "difficulty": "簡單",
+      "question": "判斷「不等於」的 Python 符號是什麼？",
+      "options": ["<>", "=!=", "not=", "!="],
+      "correctOptionIndex": 3,
+      "explanation": "這是編程中通用的比較運算符。"
+    },
+    "mcq_010": {
+      "topic": "類型轉換",
+      "difficulty": "簡單",
+      "question": "x = \"10\"，執行 int(x) + 5 的結果？",
+      "options": ["105", "\"15\"", "15", "發生錯誤"],
+      "correctOptionIndex": 2,
+      "explanation": "必須先用 int() 將字串轉換為整數才能進行加法運算。"
+    },
+    "mcq_011": {
+      "topic": "用戶輸入",
+      "difficulty": "簡單",
+      "question": "如何讓用戶輸入整數並儲存到變數 n？",
+      "options": ["n = input()", "n = int(input())", "n = input.int()", "int n = input()"],
+      "correctOptionIndex": 1,
+      "explanation": "input() 接收的是字串，需強制轉換為 int。"
+    },
+    "mcq_012": {
+      "topic": "模數運算",
+      "difficulty": "簡單",
+      "question": "10 % 3 的值是多少？",
+      "options": ["3.33", "3", "1", "0"],
+      "correctOptionIndex": 2,
+      "explanation": "% 取得除法後的餘數，10 除以 3 餘 1。"
+    },
+    "mcq_013": {
+      "topic": "字串索引",
+      "difficulty": "簡單",
+      "question": "s = \"PYTHON\"，s[0] 是什麼？",
+      "options": ["'P'", "'Y'", "'N'", "發生錯誤"],
+      "correctOptionIndex": 0,
+      "explanation": "字串的首個字符索引為 0。"
+    },
+    "mcq_014": {
+      "topic": "While 迴圈",
+      "difficulty": "簡單",
+      "question": "x=0; while x < 4: x += 2，迴圈執行幾次？",
+      "options": ["4", "3", "2", "1"],
+      "correctOptionIndex": 2,
+      "explanation": "x 分別為 0, 2 時滿足條件，變為 4 時終止。"
+    },
+    "mcq_015": {
+      "topic": "邏輯取反",
+      "difficulty": "簡單",
+      "question": "not (10 > 5) 的布林值？",
+      "options": ["True", "False", "Null", "Error"],
+      "correctOptionIndex": 1,
+      "explanation": "10 > 5 為 True，not 將其反轉。"
+    },
+    "mcq_016": {
+      "topic": "變數初始化",
+      "difficulty": "簡單",
+      "question": "寫出將計數器 count 設為初始值 0 的代碼。",
+      "options": ["count == 0", "int count = 0", "count = 0", "count := 0"],
+      "correctOptionIndex": 2,
+      "explanation": "DSE 評卷參考指出，忘記初始化變數是常見扣分位。"
+    },
+    "mcq_017": {
+      "topic": "邏輯 Or",
+      "difficulty": "簡單",
+      "question": "True or False 的結果？",
+      "options": ["True", "False", "Null", "Error"],
+      "correctOptionIndex": 0,
+      "explanation": "or 運算只要一方為真，結果即為真。"
+    },
+    "mcq_018": {
+      "topic": "無條件捨去",
+      "difficulty": "簡單",
+      "question": "如何將 9.99 轉換為整數 9？",
+      "options": ["round(9.99)", "int(9.99)", "float(9.99)", "integer(9.99)"],
+      "correctOptionIndex": 1,
+      "explanation": "int() 轉換浮點數時會直接截斷小數位。"
+    },
+    "mcq_019": {
+      "topic": "陣列添加",
+      "difficulty": "簡單",
+      "question": "如何將數字 5 加到陣列 A 的末尾？",
+      "options": ["A.add(5)", "A.insert(5)", "A.append(5)", "A.push(5)"],
+      "correctOptionIndex": 2,
+      "explanation": "append() 是將新元素加入列表尾部的方法。"
+    },
+    "mcq_020": {
+      "topic": "複合賦值",
+      "difficulty": "簡單",
+      "question": "x = 10; x += 5 後 x 的值？",
+      "options": ["5", "10", "15", "105"],
+      "correctOptionIndex": 2,
+      "explanation": "x += 5 等同於 x = x + 5。"
+    },
+    "mcq_021": {
+      "topic": "數值交換",
+      "difficulty": "中等",
+      "question": "不使用 Python 特有語法，用 temp 交換 a 和 b。",
+      "options": ["a = b; b = a", "temp = a; b = a; a = temp", "temp = a; a = b; b = temp", "a = temp; b = a; temp = b"],
+      "correctOptionIndex": 2,
+      "explanation": "必須先將其中一個值備份，否則會被覆蓋。"
+    },
+    "mcq_022": {
+      "topic": "陣列反向輸出",
+      "difficulty": "中等",
+      "question": "如何用 range 反向輸出長度為 3 的陣列 A？",
+      "options": ["for i in range(3, 0, -1): print(A[i])", "for i in range(2, -1, -1): print(A[i])", "for i in range(0, 3, 1): print(A[i])", "for i in range(-1, 2, 1): print(A[i])"],
+      "correctOptionIndex": 1,
+      "explanation": "步長設為 -1 代表遞減。"
+    },
+    "mcq_023": {
+      "topic": "函數定義",
+      "difficulty": "中等",
+      "question": "寫出一個函數 add(a, b) 回傳兩數之和。",
+      "options": ["function add(a, b): return a + b", "def add(a, b): return a + b", "add(a, b) => a + b", "void add(a, b): print(a + b)"],
+      "correctOptionIndex": 1,
+      "explanation": "def 定義子程式，return 傳回計算結果。"
+    },
+    "mcq_024": {
+      "topic": "計數算法",
+      "difficulty": "中等",
+      "question": "在 marks 陣列中找出及格（>=50）人數的代碼。",
+      "options": ["cnt=0; for m in marks: if m>50: cnt+=1", "cnt=0; for m in marks: if m>=50: cnt+=1", "for m in marks: cnt+=1", "if marks >= 50: cnt+=1"],
+      "correctOptionIndex": 1,
+      "explanation": "典型的線性遍歷與條件計數。"
+    },
+    "mcq_025": {
+      "topic": "陣列反轉邏輯",
+      "difficulty": "中等",
+      "question": "執行 for i in range(5): B[4-i] = A[i] 後的結果？",
+      "options": ["B 內容不變", "B 將成為 A 的反轉版本", "B 會發生索引越界錯誤", "B 會複製 A 的前半部"],
+      "correctOptionIndex": 1,
+      "explanation": "當 i=0，A 存入 B[4]；當 i=4，A[4] 存入 B[0]。"
+    },
+    "mcq_026": {
+      "topic": "數據驗證",
+      "difficulty": "中等",
+      "question": "寫出一個 while 直到用戶輸入正數為止。",
+      "options": ["while n > 0:", "n = -1; while n <= 0: n = int(input())", "if n <= 0:", "for n in range(0):"],
+      "correctOptionIndex": 1,
+      "explanation": "用於確保輸入數據符合業務規則。"
+    },
+    "mcq_027": {
+      "topic": "統計計算",
+      "difficulty": "中等",
+      "question": "計算陣列 JS 的平均分 FS。",
+      "options": ["FS = avg(JS)", "FS = sum(JS) / len(JS)", "FS = total(JS) / count(JS)", "FS = JS.average()"],
+      "correctOptionIndex": 1,
+      "explanation": "總和除以數量是 DSE 必考公式。"
+    },
+    "mcq_028": {
+      "topic": "Range 步長",
+      "difficulty": "中等",
+      "question": "range(1, 10, 3) 產生的序列？",
+      "options": ["1, 4, 7, 10", "1, 4, 7", "0, 3, 6, 9", "1, 3, 6, 9"],
+      "correctOptionIndex": 1,
+      "explanation": "從 1 開始，每次加 3，不包含 10。"
+    },
+    "mcq_029": {
+      "topic": "選擇排序追蹤",
+      "difficulty": "中等",
+      "question": "[3, 4, 5] 執行首輪選擇排序（找最小）後的結果。",
+      "options": ["[3, 4, 5]", "[4, 3, 5]", "[5, 4, 3]", "[3, 5, 4]"],
+      "correctOptionIndex": 1,
+      "explanation": "找到最小的 2 並與首位的 5 交換。"
+    },
+    "mcq_030": {
+      "topic": "偶數檢查",
+      "difficulty": "中等",
+      "question": "如何判斷變數 n 是偶數？",
+      "options": ["n / 2 == 0", "n % 2 == 1", "n // 2 == 0", "n % 2 == 0"],
+      "correctOptionIndex": 3,
+      "explanation": "若除以 2 餘數為 0，則為偶數。"
+    },
+    "mcq_031": {
+      "topic": "邏輯優先級",
+      "difficulty": "中等",
+      "question": "x > 10 or x < 5 and y > 0。若 x=3, y=-1，結果？",
+      "options": ["True", "False", "Error", "Null"],
+      "correctOptionIndex": 1,
+      "explanation": "and 優先於 or。先算 x<5 and y>0 為 False，再算 x>10 or False 為 False。"
+    },
+    "mcq_032": {
+      "topic": "陣列合併",
+      "difficulty": "中等",
+      "question": "如何連接 [1, 4] 和 [6, 2]？",
+      "options": ["L = [1, 4].append([6, 2])", "L = [1, 4, 6, 2]", "L = [1, 4] + [6, 2]", "L = concat([1, 4], [6, 2])"],
+      "correctOptionIndex": 2,
+      "explanation": "+ 運算符可用於列表拼接。"
+    },
+    "mcq_033": {
+      "topic": "遞減迴圈次數",
+      "difficulty": "中等",
+      "question": "range(5, 0, -1) 執行幾次？",
+      "options": ["4", "5", "6", "0"],
+      "correctOptionIndex": 1,
+      "explanation": "數字為 5, 4, 3, 2, 1。"
+    },
+    "mcq_034": {
+      "topic": "累加算法",
+      "difficulty": "中等",
+      "question": "計算 1 到 10 的總和。",
+      "options": ["s=0; for i in range(1, 10): s+=i", "s=0; for i in range(0, 10): s+=i", "s=0; for i in range(1, 11): s+=i", "s=0; for i in range(1, 12): s+=i"],
+      "correctOptionIndex": 2,
+      "explanation": "注意終止值需設為 11 才能包含 10。"
+    },
+    "mcq_035": {
+      "topic": "引用傳遞",
+      "difficulty": "中等",
+      "question": "A=[1]; B=A; B[0]=2。此時 A[0] 是多少？",
+      "options": ["[1]", "[2]", "1", "2"],
+      "correctOptionIndex": 3,
+      "explanation": "Python 列表賦值是引用，修改 B 同時會修改 A。"
+    },
+    "mcq_036": {
+      "topic": "字串切片",
+      "difficulty": "中等",
+      "question": "從 \"DSE2025\" 提取 \"2025\" 的語法。",
+      "options": ["s[3:6]", "s[4:7]", "s[3:7]", "s[4:8]"],
+      "correctOptionIndex": 2,
+      "explanation": "從索引 3 開始截取到 7 之前。"
+    },
+    "mcq_037": {
+      "topic": "局部變數範圍",
+      "difficulty": "中等",
+      "question": "def f(x): x+=1; n=10; f(n)。執行後 n 是？",
+      "options": ["10", "11", "1", "Error"],
+      "correctOptionIndex": 0,
+      "explanation": "整數是不可變對象，函數內的修改不會影響外部。"
+    },
+    "mcq_038": {
+      "topic": "成員檢查",
+      "difficulty": "中等",
+      "question": "檢查字串 p 是否包含 \"@\" 符號。",
+      "options": ["if p.contains(\"@\"):", "if \"@\" in p:", "if p.find(\"@\"):", "if p has \"@\":"],
+      "correctOptionIndex": 1,
+      "explanation": "in 是檢查元素是否存在的關鍵字。"
+    },
+    "mcq_039": {
+      "topic": "空區間迴圈",
+      "difficulty": "中等",
+      "question": "for i in range(2, 2): 會執行嗎？",
+      "options": ["執行 1 次", "執行 2 次", "無限迴圈", "不會"],
+      "correctOptionIndex": 3,
+      "explanation": "起始與終點相同，區間長度為 0。"
+    },
+    "mcq_040": {
+      "topic": "多元賦值交換",
+      "difficulty": "中等",
+      "question": "x, y = y, x 的作用？",
+      "options": ["產生語法錯誤", "將兩個變數清空", "交換 x 和 y 的值", "將 y 的值同時賦予 x 和 y"],
+      "correctOptionIndex": 2,
+      "explanation": "這是 Python 的優雅寫法，效果等同於使用 temp。"
+    },
+    "mcq_041": {
+      "topic": "2D 陣列初始化",
+      "difficulty": "困難",
+      "question": "建立一個 3x3 的全零矩陣 M。",
+      "options": ["M = [0 * 3] * 3", "M = [*3 for i in range(3)]", "M = [0, 0, 0] * 3", "M = [[0] * 3] * 3"],
+      "correctOptionIndex": 1,
+      "explanation": "必須使用嵌套結構確保每一行都是獨立的對象。"
+    },
+    "mcq_042": {
+      "topic": "2D 陣列訪問",
+      "difficulty": "困難",
+      "question": "訪問 A 矩陣中第 2 列第 3 行的元素。",
+      "options": ["A[2][3]", "A[1][2]", "A[1][4]", "A[2][4]"],
+      "correctOptionIndex": 2,
+      "explanation": "DSE 常考，索引均從 0 開始。"
+    },
+    "mcq_043": {
+      "topic": "二分搜尋中點",
+      "difficulty": "困難",
+      "question": "給予 L=0, R=10，計算中點 mid。",
+      "options": ["mid = (L + R) / 2", "mid = (L + R) // 2", "mid = L + R // 2", "mid = mid(L, R)"],
+      "correctOptionIndex": 1,
+      "explanation": "必須使用 // 確保索引為整數。"
+    },
+    "mcq_044": {
+      "topic": "二分搜尋更新",
+      "difficulty": "困難",
+      "question": "當 target < A[mid]，應如何更新？",
+      "options": ["L = mid + 1", "R = mid - 1", "R = mid", "L = mid"],
+      "correctOptionIndex": 1,
+      "explanation": "目標在左半部，因此將右邊界縮小。"
+    },
+    "mcq_045": {
+      "topic": "嵌套迴圈追蹤",
+      "difficulty": "困難",
+      "question": "for i in range(2): for j in range(3): count += 1。最終值？",
+      "options": ["5", "6", "2", "3"],
+      "correctOptionIndex": 1,
+      "explanation": "外層 2 次 * 內層 3 次 = 6 次執行。"
+    },
+    "mcq_046": {
+      "topic": "狀態計數算法",
+      "difficulty": "困難",
+      "question": "在 2D 陣列第一排中計算連續空位（0）的最大數量。",
+      "options": ["使用單一變數累加", "使用 curr_max 和 global_max 兩個變數記錄", "使用陣列儲存所有狀態", "使用 for 迴圈即可"],
+      "correctOptionIndex": 1,
+      "explanation": "參考 DSE 卷二，考核考生追蹤狀態變化的能力。"
+    },
+    "mcq_047": {
+      "topic": "排序算法改錯",
+      "difficulty": "困難",
+      "question": "若要將選擇排序改為由大到小排序，應修改哪個符號？",
+      "options": ["將 if A[j] < A[min_idx] 改為 >", "將外層迴圈反向", "將內層迴圈反向", "交換 A[i] 和 A[j]"],
+      "correctOptionIndex": 0,
+      "explanation": "改變比較邏輯即可反轉排序結果。"
+    },
+    "mcq_048": {
+      "topic": "列表深度拷貝",
+      "difficulty": "困難",
+      "question": "如何複製 L1 到 L2 使其不互相影響？",
+      "options": ["L2 = L1", "L2 == L1", "L2 = L1.copy() 或 L2 = L1[:]", "L2 = copy(L1)"],
+      "correctOptionIndex": 2,
+      "explanation": "直接 L2 = L1 只會複製引用。"
+    },
+    "mcq_049": {
+      "topic": "循環索引",
+      "difficulty": "困難",
+      "question": "如何讓索引 i 在 0 到 4 之間循環？",
+      "options": ["i = (i + 1) / 5", "i = (i + 1) % 5", "i = (i % 5) + 1", "i = i + 1"],
+      "correctOptionIndex": 1,
+      "explanation": "使用模數運算實現「轉圈」效果。"
+    },
+    "mcq_050": {
+      "topic": "二分搜尋終止",
+      "difficulty": "困難",
+      "question": "二分搜尋的 while 條件通常是什麼？",
+      "options": ["while L < R:", "while L == R:", "while L <= R:", "while L != R:"],
+      "correctOptionIndex": 2,
+      "explanation": "當左邊界超過右邊界時，代表範圍已空，搜尋結束。"
+    }
+  }
+}

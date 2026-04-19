@@ -1,42 +1,56 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-HK" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>全科溫習與自動評分系統</title>
+    <title>DSE 溫習系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // 設定 Tailwind 支援 Dark Mode 切換
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f5f5f7; color: #1d1d1f; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         .view-section { display: none; }
         .view-section.active { display: block; animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .card { background: white; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 2rem; }
+        /* 通用卡片樣式 */
+        .card { border-radius: 1rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 2rem; }
     </style>
 </head>
-<body class="min-h-screen pb-10">
+<body class="min-h-screen pb-10 bg-[#f5f5f7] dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-    <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+    <header class="bg-white dark:bg-gray-800 shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-50 transition-colors duration-300 border-b border-transparent dark:border-gray-700">
         <div class="flex items-center space-x-4">
-            <div class="font-bold text-xl text-blue-600 cursor-pointer" onclick="goHome()">EduQuiz Pro</div>
-            <button id="admin-btn" onclick="showView('admin-view')" class="hidden text-sm font-bold text-purple-600 hover:bg-purple-50 px-3 py-1 rounded-lg border border-purple-200 transition">管理員後台</button>
+            <div class="font-bold text-xl text-blue-600 dark:text-blue-400 cursor-pointer" onclick="goHome()">DSE 溫習系統</div>
+            <button id="admin-btn" onclick="showView('admin-view')" class="hidden text-sm font-bold text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-gray-700 px-3 py-1 rounded-lg border border-purple-200 dark:border-purple-500/30 transition">管理員後台</button>
         </div>
-        <div id="user-info" class="hidden flex items-center space-x-4">
-            <span id="user-name-display" class="text-sm font-medium text-gray-600"></span>
-            <button onclick="logout()" class="text-sm text-red-500 hover:underline font-bold">登出</button>
+        <div class="flex items-center space-x-4">
+            <button onclick="toggleTheme()" id="theme-toggle" class="text-xl p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">☀️</button>
+            
+            <div id="user-info" class="hidden flex items-center space-x-4 border-l pl-4 dark:border-gray-700">
+                <span id="user-name-display" class="text-sm font-medium text-gray-600 dark:text-gray-300"></span>
+                <button onclick="logout()" class="text-sm text-red-500 dark:text-red-400 hover:underline font-bold">登出</button>
+            </div>
         </div>
     </header>
 
     <main class="max-w-[1000px] mx-auto p-4 mt-6">
         
         <div id="login-view" class="view-section active">
-            <div class="card max-w-md mx-auto text-center mt-20">
+            <div class="card bg-white dark:bg-gray-800 max-w-md mx-auto text-center mt-20 transition-colors duration-300">
                 <h2 class="text-3xl font-bold mb-2">歡迎回來</h2>
-                <p class="text-gray-500 mb-8">請登入以開始溫習與紀錄進度</p>
-                <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center space-x-3 bg-white border border-gray-300 py-3 rounded-xl hover:bg-gray-50 transition shadow-sm font-bold text-gray-700">
+                <p class="text-gray-500 dark:text-gray-400 mb-8">請登入以開始溫習與紀錄進度</p>
+                <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-600 transition shadow-sm font-bold text-gray-700 dark:text-gray-200">
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5">
                     <span>使用 Google 帳號登入</span>
                 </button>
@@ -49,36 +63,34 @@
                 </div>
         </div>
 
-        <div id="dashboard-view" class="view-section">
-            <div class="flex items-center space-x-2 mb-6">
-                <button onclick="showView('home-view')" class="text-blue-600 hover:underline">科目</button>
-                <span class="text-gray-400">/</span>
-                <span id="current-subject-name" class="font-bold"></span>
-            </div>
-            <div id="topic-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div id="quiz-view" class="view-section card bg-white dark:bg-gray-800 transition-colors duration-300">
+            <div class="flex justify-between items-center mb-6 border-b dark:border-gray-700 pb-4">
+                <div class="flex items-center space-x-3">
+                    <span id="quiz-subject-badge" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg text-sm font-bold">科目</span>
+                    <span class="text-gray-300 dark:text-gray-600">❯</span>
+                    <h3 id="question-topic-label" class="text-lg font-bold text-blue-600 dark:text-blue-400">課題名稱</h3>
                 </div>
-        </div>
-
-        <div id="quiz-view" class="view-section card">
-            <div class="flex justify-between items-center mb-6 border-b pb-4">
-                <h3 id="question-topic-label" class="text-lg font-bold text-blue-600"></h3>
-                <button onclick="showView('dashboard-view')" class="text-gray-400 hover:text-gray-600">✕ 關閉</button>
+                <div class="flex items-center space-x-4">
+                    <span id="quiz-progress-text" class="text-sm font-bold text-gray-500 dark:text-gray-400">1 / 10</span>
+                    <button onclick="showView('home-view')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition text-xl">✕</button>
+                </div>
             </div>
+            
             <div id="quiz-content">
-                <p id="question-text" class="text-xl font-bold mb-8 leading-relaxed"></p>
+                <p id="question-text" class="text-xl font-bold mb-8 leading-relaxed dark:text-white"></p>
                 <div id="options-container" class="space-y-4"></div>
                 <div id="feedback-area" class="hidden mt-8 p-6 rounded-xl border-l-4">
                     <div id="feedback-result" class="font-bold text-lg mb-2"></div>
-                    <div id="explanation-text" class="text-gray-600 text-sm italic"></div>
-                    <button onclick="nextQuestion()" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg font-bold">下一題</button>
+                    <div id="explanation-text" class="text-gray-700 dark:text-gray-300 text-sm italic"></div>
+                    <button onclick="nextQuestion()" class="mt-6 bg-blue-600 text-white px-8 py-2.5 rounded-lg font-bold hover:bg-blue-700 transition w-full md:w-auto">下一題</button>
                 </div>
             </div>
         </div>
 
-        <div id="admin-view" class="view-section card">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b pb-6">
+        <div id="admin-view" class="view-section card bg-white dark:bg-gray-800 transition-colors duration-300">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b dark:border-gray-700 pb-6">
                 <h2 class="text-2xl font-bold">⚙️ 管理員後台</h2>
-                <div class="flex bg-gray-100 p-1 rounded-xl">
+                <div class="flex bg-gray-100 dark:bg-gray-900 p-1 rounded-xl">
                     <button onclick="switchAdminTab('problems')" id="tab-btn-problems" class="px-4 py-2 rounded-lg text-sm font-bold transition">題目管理</button>
                     <button onclick="switchAdminTab('users')" id="tab-btn-users" class="px-4 py-2 rounded-lg text-sm font-bold transition">用戶數據</button>
                 </div>
@@ -87,8 +99,8 @@
             <div id="admin-problems-section">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                     <div class="flex items-center space-x-3 w-full md:w-auto">
-                        <label class="text-sm font-bold text-gray-500">當前科目:</label>
-                        <select id="admin-subject-filter" onchange="loadAdminProblems()" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-blue-500 outline-none">
+                        <label class="text-sm font-bold text-gray-500 dark:text-gray-400">當前科目:</label>
+                        <select id="admin-subject-filter" onchange="loadAdminProblems()" class="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
                             <option value="sub_ict">💻 資訊及通訊科技 (ICT)</option>
                             <option value="sub_math">📐 數學</option>
                             <option value="sub_chi">📚 中國語文</option>
@@ -98,33 +110,33 @@
                     </div>
                     <button onclick="showProblemEditor()" class="w-full md:w-auto bg-green-500 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-600 transition">＋ 新增題目</button>
                 </div>
-                <div class="overflow-x-auto rounded-xl border border-gray-100">
+                <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-700">
                     <table class="min-w-full text-sm text-left">
-                        <thead class="bg-gray-50">
+                        <thead class="bg-gray-50 dark:bg-gray-900 border-b dark:border-gray-700">
                             <tr>
-                                <th class="px-4 py-4 font-bold text-gray-600">ID / 課題</th>
-                                <th class="px-4 py-4 font-bold text-gray-600">問題描述</th>
-                                <th class="px-4 py-4 font-bold text-gray-600 text-center">操作</th>
+                                <th class="px-4 py-4 font-bold text-gray-600 dark:text-gray-300">ID / 課題</th>
+                                <th class="px-4 py-4 font-bold text-gray-600 dark:text-gray-300">問題描述</th>
+                                <th class="px-4 py-4 font-bold text-gray-600 dark:text-gray-300 text-center">操作</th>
                             </tr>
                         </thead>
-                        <tbody id="admin-problem-list" class="divide-y divide-gray-50"></tbody>
+                        <tbody id="admin-problem-list" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody>
                     </table>
                 </div>
             </div>
 
             <div id="admin-users-section" class="hidden">
                 <h3 class="text-lg font-bold mb-4">學生成績總覽 (全科累計)</h3>
-                <div class="overflow-x-auto rounded-xl border border-gray-100">
+                <div class="overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-700">
                     <table class="min-w-full text-sm text-left">
-                        <thead class="bg-gray-50">
+                        <thead class="bg-gray-50 dark:bg-gray-900 border-b dark:border-gray-700">
                             <tr>
-                                <th class="px-4 py-4 font-bold text-gray-600">用戶資訊</th>
-                                <th class="px-4 py-4 font-bold text-gray-600 text-center">角色</th>
-                                <th class="px-4 py-4 font-bold text-gray-600 text-center">正確率</th>
-                                <th class="px-4 py-4 font-bold text-gray-600 text-center">作答次數</th>
+                                <th class="px-4 py-4 font-bold text-gray-600 dark:text-gray-300">用戶資訊</th>
+                                <th class="px-4 py-4 font-bold text-gray-600 dark:text-gray-300 text-center">角色</th>
+                                <th class="px-4 py-4 font-bold text-gray-600 dark:text-gray-300 text-center">正確率</th>
+                                <th class="px-4 py-4 font-bold text-gray-600 dark:text-gray-300 text-center">作答次數</th>
                             </tr>
                         </thead>
-                        <tbody id="admin-users-list" class="divide-y divide-gray-50"></tbody>
+                        <tbody id="admin-users-list" class="divide-y divide-gray-100 dark:divide-gray-700"></tbody>
                     </table>
                 </div>
             </div>
@@ -132,16 +144,16 @@
     </main>
 
     <div id="problem-editor-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8 border dark:border-gray-700">
             <h3 id="editor-title" class="text-2xl font-bold mb-6">新增題目</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">課題 (Topic)</label>
-                    <input type="text" id="edit-topic" placeholder="例如：迴圈" class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition">
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">課題 (Topic)</label>
+                    <input type="text" id="edit-topic" placeholder="例如：迴圈" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition">
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">難度</label>
-                    <select id="edit-difficulty" class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition">
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">難度</label>
+                    <select id="edit-difficulty" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition">
                         <option value="簡單">簡單</option>
                         <option value="中等">中等</option>
                         <option value="困難">困難</option>
@@ -149,37 +161,37 @@
                 </div>
             </div>
             <div class="mb-6">
-                <label class="block text-sm font-bold text-gray-700 mb-2">題目敘述</label>
-                <textarea id="edit-question" rows="3" class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition"></textarea>
+                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">題目敘述</label>
+                <textarea id="edit-question" rows="3" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition"></textarea>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-gray-50 p-4 rounded-xl">
-                <div><label class="text-xs font-bold text-gray-400">選項 A</label><input type="text" id="edit-opt0" class="w-full border-b bg-transparent py-1 outline-none"></div>
-                <div><label class="text-xs font-bold text-gray-400">選項 B</label><input type="text" id="edit-opt1" class="w-full border-b bg-transparent py-1 outline-none"></div>
-                <div><label class="text-xs font-bold text-gray-400">選項 C</label><input type="text" id="edit-opt2" class="w-full border-b bg-transparent py-1 outline-none"></div>
-                <div><label class="text-xs font-bold text-gray-400">選項 D</label><input type="text" id="edit-opt3" class="w-full border-b bg-transparent py-1 outline-none"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 bg-gray-50 dark:bg-gray-900 p-4 rounded-xl border dark:border-gray-700">
+                <div><label class="text-xs font-bold text-gray-400 dark:text-gray-500">選項 A</label><input type="text" id="edit-opt0" class="w-full border-b border-gray-300 dark:border-gray-600 bg-transparent text-gray-900 dark:text-white py-1 outline-none"></div>
+                <div><label class="text-xs font-bold text-gray-400 dark:text-gray-500">選項 B</label><input type="text" id="edit-opt1" class="w-full border-b border-gray-300 dark:border-gray-600 bg-transparent text-gray-900 dark:text-white py-1 outline-none"></div>
+                <div><label class="text-xs font-bold text-gray-400 dark:text-gray-500">選項 C</label><input type="text" id="edit-opt2" class="w-full border-b border-gray-300 dark:border-gray-600 bg-transparent text-gray-900 dark:text-white py-1 outline-none"></div>
+                <div><label class="text-xs font-bold text-gray-400 dark:text-gray-500">選項 D</label><input type="text" id="edit-opt3" class="w-full border-b border-gray-300 dark:border-gray-600 bg-transparent text-gray-900 dark:text-white py-1 outline-none"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">正確答案</label>
-                    <select id="edit-correct" class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition">
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">正確答案</label>
+                    <select id="edit-correct" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition">
                         <option value="0">選項 A</option><option value="1">選項 B</option><option value="2">選項 C</option><option value="3">選項 D</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-bold text-gray-700 mb-2">答案解析</label>
-                    <textarea id="edit-explanation" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition"></textarea>
+                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">答案解析</label>
+                    <textarea id="edit-explanation" rows="2" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl px-4 py-3 focus:border-blue-500 outline-none transition"></textarea>
                 </div>
             </div>
             <div class="flex justify-end space-x-4">
-                <button onclick="closeProblemEditor()" class="px-6 py-3 text-gray-500 font-bold hover:bg-gray-100 rounded-xl transition">取消</button>
-                <button onclick="saveProblem()" class="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition">儲存題目</button>
+                <button onclick="closeProblemEditor()" class="px-6 py-3 text-gray-500 dark:text-gray-400 font-bold hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition">取消</button>
+                <button onclick="saveProblem()" class="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200 dark:shadow-none hover:bg-blue-700 transition">儲存題目</button>
             </div>
         </div>
     </div>
 
     <script>
-// 1. 初始化 Firebase
-        const firebaseConfig = {
+         // 1. 初始化 Firebase (⚠️ 請將以下字串替換為你真實的 Firebase Config)
+       const firebaseConfig = {
             apiKey: "AIzaSyBpgQN6lxrVQvGx3bcBfoEsPeao1U6jYoU",
             authDomain: "studysysten.firebaseapp.com",
             databaseURL: "https://studysysten-default-rtdb.asia-southeast1.firebasedatabase.app/", // ⚠️ 新增了這行！這是資料庫的靈魂
@@ -188,18 +200,28 @@
             messagingSenderId: "625298921580",
             appId: "1:625298921580:web:3bc28bb2d449ad6c132049",
             measurementId: "G-T21Z1GL1LK"
+
         };
-        
         // ⚠️ 請確保這四行「絕對沒有」被不小心刪掉！
+
         firebase.initializeApp(firebaseConfig);
+
         const auth = firebase.auth();
+
         const db = firebase.database();
+
         const googleProvider = new firebase.auth.GoogleAuthProvider();
 
+
+
         // 系統變數
+
         let currentUser = null;
+
         let currentSubjectId = null;
+
         let currentProblems = {};
+
         // ... (下方保留你原本的程式碼，如 let currentQuizList 等)
         let quizIndex = 0;
         let cachedAdminProblems = {};
@@ -213,7 +235,24 @@
             "sub_econ": { name: "經濟", icon: "📈", color: "purple" }
         };
 
-        // 2. 視圖導航
+        // ========== 主題 (Dark/Light Mode) 切換邏輯 ==========
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle').innerText = isDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // 載入時初始化主題 (預設黑色模式)
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.getElementById('theme-toggle').innerText = '🌙';
+        } else {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-toggle').innerText = '☀️';
+        }
+
+        // ========== 視圖導航 ==========
         function showView(viewId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
@@ -225,7 +264,7 @@
             else showView('login-view');
         }
 
-        // 3. 身份驗證邏輯
+        // ========== 身份驗證邏輯 ==========
         function loginWithGoogle() { auth.signInWithPopup(googleProvider).catch(err => alert(err.message)); }
         function logout() { auth.signOut(); }
 
@@ -239,13 +278,12 @@
                 const userRef = db.ref('users/' + user.uid);
                 const userSnap = await userRef.once('value');
                 if (!userSnap.exists()) {
-                    // 首次登入，建立 User 資料
                     await userRef.set({ name: user.displayName, email: user.email, role: 'user', createdAt: Date.now() });
                 }
                 const userData = (await userRef.once('value')).val();
-                if (userData.role === 'admin') {
+                if (userData && userData.role === 'admin') {
                     document.getElementById('admin-btn').classList.remove('hidden');
-                    loadAdminProblems();
+                    loadAdminProblems(); // 預載後台
                 }
 
                 renderSubjectSelection();
@@ -257,65 +295,57 @@
             }
         });
 
-        // 4. 前端業務邏輯 (用戶側)
+        // ========== 前端業務邏輯 (用戶測驗) ==========
         function renderSubjectSelection() {
             const list = document.getElementById('subject-list');
             list.innerHTML = '';
             Object.keys(SUBJECTS).forEach(id => {
                 const s = SUBJECTS[id];
                 const card = document.createElement('div');
-                card.className = "card cursor-pointer hover:scale-105 transition transform border-b-8 border-" + s.color + "-500";
-                card.innerHTML = `<div class="text-4xl mb-4">${s.icon}</div><div class="text-xl font-bold">${s.name}</div><div class="text-gray-400 text-sm mt-2">點擊開始溫習</div>`;
-                card.onclick = () => selectSubject(id);
+                card.className = `card bg-white dark:bg-gray-800 cursor-pointer hover:scale-105 transition transform border-b-8 border-${s.color}-500`;
+                card.innerHTML = `<div class="text-4xl mb-4">${s.icon}</div><div class="text-xl font-bold">${s.name}</div><div class="text-gray-400 text-sm mt-2">點擊直接開始測驗</div>`;
+                card.onclick = () => startSubjectQuiz(id);
                 list.appendChild(card);
             });
         }
 
-        async function selectSubject(sid) {
+        // 新邏輯：選擇科目後直接撈出所有題目並開始測驗
+        async function startSubjectQuiz(sid) {
             currentSubjectId = sid;
-            document.getElementById('current-subject-name').innerText = SUBJECTS[sid].name;
+            document.getElementById('quiz-subject-badge').innerText = SUBJECTS[sid].name;
+            
             const snap = await db.ref(`problems/${sid}`).once('value');
-            currentProblems = snap.val() || {};
+            const problems = snap.val() || {};
             
-            const topicList = document.getElementById('topic-list');
-            topicList.innerHTML = '';
-            const topics = [...new Set(Object.values(currentProblems).map(p => p.topic))];
-            
-            if (topics.length === 0) {
-                topicList.innerHTML = '<p class="col-span-2 text-center text-gray-400 py-10">此科目暫無題目</p>';
-            } else {
-                topics.forEach(t => {
-                    const btn = document.createElement('button');
-                    btn.className = "card text-left p-6 hover:bg-blue-50 transition border-l-4 border-blue-500";
-                    btn.innerHTML = `<div class="font-bold text-lg">${t}</div><div class="text-blue-500 text-xs mt-1">共有 ${Object.values(currentProblems).filter(p => p.topic === t).length} 題</div>`;
-                    btn.onclick = () => startQuiz(t);
-                    topicList.appendChild(btn);
-                });
+            const problemKeys = Object.keys(problems);
+            if (problemKeys.length === 0) {
+                alert("此科目尚未建立任何題目！");
+                return;
             }
-            showView('dashboard-view');
-        }
 
-        function startQuiz(topic) {
-            currentQuizList = Object.entries(currentProblems)
-                .filter(([id, p]) => p.topic === topic)
-                .map(([id, p]) => ({ id, ...p }));
+            // 將題目轉換為陣列，並隨機打亂順序
+            currentQuizList = problemKeys.map(id => ({ id, ...problems[id] })).sort(() => Math.random() - 0.5);
             quizIndex = 0;
+            
             renderQuestion();
             showView('quiz-view');
         }
 
         function renderQuestion() {
             const p = currentQuizList[quizIndex];
-            document.getElementById('question-topic-label').innerText = p.topic;
+            document.getElementById('question-topic-label').innerText = p.topic || "未分類課題";
+            document.getElementById('quiz-progress-text').innerText = `${quizIndex + 1} / ${currentQuizList.length}`;
             document.getElementById('question-text').innerText = p.question;
             document.getElementById('feedback-area').classList.add('hidden');
             
             const container = document.getElementById('options-container');
             container.innerHTML = '';
+            
             p.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full text-left p-4 border rounded-xl hover:bg-gray-50 transition font-medium flex items-center";
-                btn.innerHTML = `<span class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full mr-4 text-sm font-bold">${String.fromCharCode(65 + idx)}</span> ${opt}`;
+                // 預設樣式 (淺色+深色)
+                btn.className = "option-btn w-full text-left p-4 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition font-medium flex items-center";
+                btn.innerHTML = `<span class="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-full mr-4 text-sm font-bold text-gray-700 dark:text-gray-300 option-letter">${String.fromCharCode(65 + idx)}</span> <span class="flex-1">${opt}</span>`;
                 btn.onclick = () => checkAnswer(idx);
                 container.appendChild(btn);
             });
@@ -327,41 +357,66 @@
             const feedback = document.getElementById('feedback-area');
             const result = document.getElementById('feedback-result');
             
+            // 處理按鈕視覺變化 (正確標綠色，選錯標紅色，其餘變暗)
+            const buttons = document.getElementById('options-container').querySelectorAll('.option-btn');
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true; // 停用按鈕
+                btn.classList.remove('hover:bg-gray-50', 'dark:hover:bg-gray-700'); // 移除 hover 效果
+                
+                if (idx === p.correctOptionIndex) {
+                    // 標示正確答案 (綠色)
+                    btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800', 'dark:bg-green-900/50', 'dark:border-green-500', 'dark:text-green-200');
+                    btn.classList.remove('bg-white', 'dark:bg-gray-800', 'border-gray-200', 'dark:border-gray-700');
+                    btn.querySelector('.option-letter').classList.add('bg-green-500', 'text-white');
+                    btn.querySelector('.option-letter').classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                } else if (idx === selectedIdx && !isCorrect) {
+                    // 標示錯誤的選擇 (紅色)
+                    btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800', 'dark:bg-red-900/50', 'dark:border-red-500', 'dark:text-red-200');
+                    btn.classList.remove('bg-white', 'dark:bg-gray-800', 'border-gray-200', 'dark:border-gray-700');
+                    btn.querySelector('.option-letter').classList.add('bg-red-500', 'text-white');
+                    btn.querySelector('.option-letter').classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                } else {
+                    // 其餘選項變暗
+                    btn.classList.add('opacity-40');
+                }
+            });
+            
+            // 顯示底部回饋區塊
             feedback.classList.remove('hidden');
             if (isCorrect) {
-                feedback.className = "mt-8 p-6 rounded-xl border-l-4 bg-green-50 border-green-500";
-                result.className = "font-bold text-lg mb-2 text-green-700";
-                result.innerText = "⭐ 正確！";
+                feedback.className = "mt-8 p-6 rounded-xl border-l-4 bg-green-50 dark:bg-green-900/20 border-green-500";
+                result.className = "font-bold text-lg mb-2 text-green-700 dark:text-green-400";
+                result.innerText = "⭐ 答對了！";
             } else {
-                feedback.className = "mt-8 p-6 rounded-xl border-l-4 bg-red-50 border-red-500";
-                result.className = "font-bold text-lg mb-2 text-red-700";
-                result.innerText = "❌ 答錯了 (正確答案是 " + String.fromCharCode(65 + p.correctOptionIndex) + ")";
+                feedback.className = "mt-8 p-6 rounded-xl border-l-4 bg-red-50 dark:bg-red-900/20 border-red-500";
+                result.className = "font-bold text-lg mb-2 text-red-700 dark:text-red-400";
+                result.innerText = `❌ 答錯了 (正確答案是 ${String.fromCharCode(65 + p.correctOptionIndex)})`;
             }
             document.getElementById('explanation-text').innerText = p.explanation;
 
-            // 紀錄進度到 Firebase (Async)
+            // 紀錄進度到 Firebase (背景執行)
             const updates = {};
             const subKey = `submissions/${currentUser.uid}/${p.id}`;
             updates[subKey] = { isCorrect, lastAttemptAt: Date.now() };
-            // 更新進度節點 (略，可根據前面架構擴充)
             db.ref().update(updates);
         }
 
         function nextQuestion() {
             quizIndex++;
-            if (quizIndex < currentQuizList.length) renderQuestion();
-            else {
-                alert("恭喜！你已完成本課題的所有溫習題目。");
-                showView('dashboard-view');
+            if (quizIndex < currentQuizList.length) {
+                renderQuestion();
+            } else {
+                alert("恭喜！你已完成本科目的所有題目！");
+                showView('home-view'); // 測驗結束直接返回首頁
             }
         }
 
-        // 5. 管理員邏輯
+        // ========== 管理員邏輯 ==========
         function switchAdminTab(tab) {
             document.getElementById('admin-problems-section').classList.toggle('hidden', tab !== 'problems');
             document.getElementById('admin-users-section').classList.toggle('hidden', tab !== 'users');
-            document.getElementById('tab-btn-problems').className = tab === 'problems' ? "px-4 py-2 rounded-lg text-sm font-bold bg-blue-600 text-white" : "px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:bg-gray-200";
-            document.getElementById('tab-btn-users').className = tab === 'users' ? "px-4 py-2 rounded-lg text-sm font-bold bg-blue-600 text-white" : "px-4 py-2 rounded-lg text-sm font-bold text-gray-500 hover:bg-gray-200";
+            document.getElementById('tab-btn-problems').className = tab === 'problems' ? "px-4 py-2 rounded-lg text-sm font-bold bg-blue-600 text-white" : "px-4 py-2 rounded-lg text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700";
+            document.getElementById('tab-btn-users').className = tab === 'users' ? "px-4 py-2 rounded-lg text-sm font-bold bg-blue-600 text-white" : "px-4 py-2 rounded-lg text-sm font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700";
             if (tab === 'users') loadAdminUsersProgress();
         }
 
@@ -374,14 +429,22 @@
             cachedAdminProblems = snap.val() || {};
             tbody.innerHTML = '';
             
-            Object.entries(cachedAdminProblems).forEach(([id, p]) => {
+            const problemKeys = Object.keys(cachedAdminProblems);
+            if (problemKeys.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="p-10 text-center text-gray-400">此科目尚未建立任何題目。</td></tr>';
+                return;
+            }
+            
+            problemKeys.forEach(id => {
+                const p = cachedAdminProblems[id];
                 const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors";
                 tr.innerHTML = `
                     <td class="px-4 py-4"><div class="font-bold">${p.topic}</div><div class="text-[10px] text-gray-400">${id}</div></td>
-                    <td class="px-4 py-4 text-gray-500 truncate max-w-[300px]">${p.question}</td>
+                    <td class="px-4 py-4 text-gray-600 dark:text-gray-400 truncate max-w-[300px]">${p.question}</td>
                     <td class="px-4 py-4 text-center space-x-4">
-                        <button onclick="showProblemEditor('${id}')" class="text-blue-600 font-bold hover:underline">編輯</button>
-                        <button onclick="deleteProblem('${id}')" class="text-red-400 font-bold hover:underline">刪除</button>
+                        <button onclick="showProblemEditor('${id}')" class="text-blue-600 dark:text-blue-400 font-bold hover:underline">編輯</button>
+                        <button onclick="deleteProblem('${id}')" class="text-red-500 dark:text-red-400 font-bold hover:underline">刪除</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -392,21 +455,26 @@
             currentEditingProblemId = pid;
             const modal = document.getElementById('problem-editor-modal');
             document.getElementById('editor-title').innerText = pid ? "編輯題目" : "新增題目";
-            if (pid) {
+            if (pid && cachedAdminProblems[pid]) {
                 const p = cachedAdminProblems[pid];
-                document.getElementById('edit-topic').value = p.topic;
-                document.getElementById('edit-difficulty').value = p.difficulty;
-                document.getElementById('edit-question').value = p.question;
-                document.getElementById('edit-opt0').value = p.options[0];
-                document.getElementById('edit-opt1').value = p.options[1];
-                document.getElementById('edit-opt2').value = p.options[2];
-                document.getElementById('edit-opt3').value = p.options[3];
-                document.getElementById('edit-correct').value = p.correctOptionIndex;
-                document.getElementById('edit-explanation').value = p.explanation;
+                document.getElementById('edit-topic').value = p.topic || "";
+                document.getElementById('edit-difficulty').value = p.difficulty || "簡單";
+                document.getElementById('edit-question').value = p.question || "";
+                document.getElementById('edit-opt0').value = p.options ? p.options[0] : "";
+                document.getElementById('edit-opt1').value = p.options ? p.options[1] : "";
+                document.getElementById('edit-opt2').value = p.options ? p.options[2] : "";
+                document.getElementById('edit-opt3').value = p.options ? p.options[3] : "";
+                document.getElementById('edit-correct').value = p.correctOptionIndex !== undefined ? p.correctOptionIndex : 0;
+                document.getElementById('edit-explanation').value = p.explanation || "";
             } else {
                 document.getElementById('edit-topic').value = "";
                 document.getElementById('edit-question').value = "";
-                // ... 其他清空邏輯
+                document.getElementById('edit-opt0').value = "";
+                document.getElementById('edit-opt1').value = "";
+                document.getElementById('edit-opt2').value = "";
+                document.getElementById('edit-opt3').value = "";
+                document.getElementById('edit-correct').value = "0";
+                document.getElementById('edit-explanation').value = "";
             }
             modal.classList.remove('hidden');
         }
@@ -417,20 +485,31 @@
             const sid = document.getElementById('admin-subject-filter').value;
             const pid = currentEditingProblemId || ('mcq_' + Date.now());
             const data = {
-                topic: document.getElementById('edit-topic').value,
+                topic: document.getElementById('edit-topic').value.trim(),
                 difficulty: document.getElementById('edit-difficulty').value,
-                question: document.getElementById('edit-question').value,
-                options: [document.getElementById('edit-opt0').value, document.getElementById('edit-opt1').value, document.getElementById('edit-opt2').value, document.getElementById('edit-opt3').value],
+                question: document.getElementById('edit-question').value.trim(),
+                options: [
+                    document.getElementById('edit-opt0').value.trim(), 
+                    document.getElementById('edit-opt1').value.trim(), 
+                    document.getElementById('edit-opt2').value.trim(), 
+                    document.getElementById('edit-opt3').value.trim()
+                ],
                 correctOptionIndex: parseInt(document.getElementById('edit-correct').value),
-                explanation: document.getElementById('edit-explanation').value
+                explanation: document.getElementById('edit-explanation').value.trim()
             };
+            
+            if(!data.topic || !data.question || !data.options[0]) {
+                alert("請填寫完整的題目資訊！");
+                return;
+            }
+            
             await db.ref(`problems/${sid}/${pid}`).set(data);
             closeProblemEditor();
             loadAdminProblems();
         }
 
         async function deleteProblem(pid) {
-            if (!confirm("確定刪除？")) return;
+            if (!confirm("確定刪除這道題目？")) return;
             const sid = document.getElementById('admin-subject-filter').value;
             await db.ref(`problems/${sid}/${pid}`).remove();
             loadAdminProblems();
@@ -439,19 +518,26 @@
         async function loadAdminUsersProgress() {
             const list = document.getElementById('admin-users-list');
             list.innerHTML = '<tr><td colspan="4" class="p-10 text-center text-gray-400">數據分析中...</td></tr>';
-            const usersSnap = await db.ref('users').once('value');
-            const users = usersSnap.val() || {};
-            list.innerHTML = '';
-            Object.values(users).forEach(u => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="px-4 py-4 font-bold">${u.name}<div class="text-[10px] font-normal text-gray-400">${u.email}</div></td>
-                    <td class="px-4 py-4 text-center text-xs">${u.role === 'admin' ? '⭐ 管理員' : '👤 用戶'}</td>
-                    <td class="px-4 py-4 text-center font-bold text-blue-600">85%</td>
-                    <td class="px-4 py-4 text-center text-gray-400">120</td>
-                `;
-                list.appendChild(tr);
-            });
+            
+            try {
+                const usersSnap = await db.ref('users').once('value');
+                const users = usersSnap.val() || {};
+                
+                list.innerHTML = '';
+                Object.values(users).forEach(u => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors";
+                    tr.innerHTML = `
+                        <td class="px-4 py-4 font-bold">${u.name || '未知'}<div class="text-[10px] font-normal text-gray-500">${u.email || ''}</div></td>
+                        <td class="px-4 py-4 text-center text-xs">${u.role === 'admin' ? '⭐ 管理員' : '👤 用戶'}</td>
+                        <td class="px-4 py-4 text-center font-bold text-blue-600 dark:text-blue-400">-</td>
+                        <td class="px-4 py-4 text-center text-gray-500">-</td>
+                    `;
+                    list.appendChild(tr);
+                });
+            } catch(e) {
+                list.innerHTML = '<tr><td colspan="4" class="p-10 text-center text-red-500">讀取資料權限不足</td></tr>';
+            }
         }
 
     </script>
