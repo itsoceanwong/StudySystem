@@ -50,13 +50,25 @@
         </div>
 
         <div id="home-view" class="view-section">
+            
+            <div class="bg-gradient-to-r from-teal-400 to-blue-500 rounded-xl p-6 mb-8 text-white shadow-lg flex justify-between items-center transition-transform hover:scale-[1.01]">
+                <div>
+                    <h3 class="text-xl font-bold mb-1">📊 你的學習總覽</h3>
+                    <p class="text-sm opacity-90">已完成題數：<span id="home-total-attempted" class="font-bold text-lg mx-1">0</span> 題</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm opacity-90 mb-1">總正確率</p>
+                    <div class="text-4xl font-bold drop-shadow-md"><span id="home-overall-accuracy">0</span>%</div>
+                </div>
+            </div>
+
             <h2 class="text-2xl font-bold mb-6">1. 請選擇溫習科目</h2>
             <div id="subject-list" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
         </div>
 
         <div id="type-select-view" class="view-section">
             <div class="flex items-center space-x-2 mb-6 text-sm">
-                <button onclick="showView('home-view')" class="text-blue-600 hover:underline">科目</button>
+                <button onclick="goHome()" class="text-blue-600 hover:underline">科目</button>
                 <span class="text-gray-400">❯</span>
                 <span id="type-subject-name" class="font-bold text-gray-700 dark:text-gray-300"></span>
             </div>
@@ -75,19 +87,19 @@
 
         <div id="dashboard-view" class="view-section">
             <div class="flex items-center space-x-2 mb-6 text-sm">
-                <button onclick="showView('home-view')" class="text-blue-600 hover:underline">科目</button>
+                <button onclick="goHome()" class="text-blue-600 hover:underline">科目</button>
                 <span class="text-gray-400">❯</span>
                 <button onclick="showView('type-select-view')" class="text-blue-600 hover:underline" id="dash-subject-name">科目</button>
                 <span class="text-gray-400">❯</span>
                 <span id="dash-type-name" class="font-bold text-gray-700 dark:text-gray-300"></span>
             </div>
             
-<div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-6 mb-8 text-white shadow-lg flex justify-between items-center">
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-6 mb-8 text-white shadow-lg flex justify-between items-center">
                 <div>
                     <h3 class="text-xl font-bold mb-1">🎲 終極挑戰</h3>
-                    <p class="text-sm opacity-90">隨機打亂並測驗題庫中的所有題目</p>
+                    <p class="text-sm opacity-90">隨機抽取「尚未作答過」的題目進行測驗</p>
                 </div>
-                <button onclick="startQuiz('random')" class="bg-white text-blue-600 px-6 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">隨機全部作答</button>
+                <button onclick="startQuiz('random')" class="bg-white text-blue-600 px-6 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">隨機抽取未答題目</button>
             </div>
 
             <h2 class="text-xl font-bold mb-4 border-b dark:border-gray-700 pb-2">或 按課題分類溫習</h2>
@@ -235,7 +247,7 @@
 
     <script>
         // 1. 初始化 Firebase (⚠️ 請替換為你的 Firebase Config)
-const firebaseConfig = {
+       const firebaseConfig = {
             apiKey: "AIzaSyBpgQN6lxrVQvGx3bcBfoEsPeao1U6jYoU",
             authDomain: "studysysten.firebaseapp.com",
             databaseURL: "https://studysysten-default-rtdb.asia-southeast1.firebasedatabase.app/", // ⚠️ 新增了這行！這是資料庫的靈魂
@@ -246,16 +258,17 @@ const firebaseConfig = {
             measurementId: "G-T21Z1GL1LK"
 
         };
-        // ⚠️ 請確保這四行「絕對沒有」被不小心刪掉！
         firebase.initializeApp(firebaseConfig);
+        // ⚠️ 請確保這四行「絕對沒有」被不小心刪掉！     
         const auth = firebase.auth();
         const db = firebase.database();
         const googleProvider = new firebase.auth.GoogleAuthProvider();
-        // 系統變數
+
         let currentUser = null;
         let currentSubjectId = null;
+        let currentType = null; 
         let currentProblems = {};
-        // ... (下方保留你原本的程式碼，如 let currentQuizList 等)
+        let currentQuizList = [];
         let quizIndex = 0;
         let cachedAdminProblems = {};
         let currentEditingProblemId = null;
@@ -285,7 +298,15 @@ const firebaseConfig = {
             document.getElementById(viewId).classList.add('active');
             window.scrollTo(0,0);
         }
-        function goHome() { currentUser ? showView('home-view') : showView('login-view'); }
+        
+        function goHome() { 
+            if(currentUser) {
+                loadUserProgress(); // 回到主頁時更新進度
+                showView('home-view');
+            } else {
+                showView('login-view');
+            }
+        }
 
         // ========== 身份驗證與紀錄保持 ==========
         function loginWithGoogle() { auth.signInWithPopup(googleProvider).catch(err => alert(err.message)); }
@@ -297,7 +318,6 @@ const firebaseConfig = {
                 document.getElementById('user-info').classList.remove('hidden');
                 document.getElementById('user-name-display').innerText = user.displayName;
                 
-                // 檢查權限 (如果 UID 存在就不會覆寫，完美保留學生紀錄)
                 const userRef = db.ref('users/' + user.uid);
                 const userSnap = await userRef.once('value');
                 if (!userSnap.exists()) {
@@ -310,6 +330,7 @@ const firebaseConfig = {
                 }
 
                 renderSubjectSelection();
+                loadUserProgress();
                 showView('home-view');
             } else {
                 currentUser = null;
@@ -317,6 +338,24 @@ const firebaseConfig = {
                 showView('login-view');
             }
         });
+
+        async function loadUserProgress() {
+            if (!currentUser) return;
+            try {
+                const snap = await db.ref(`submissions/${currentUser.uid}`).once('value');
+                const subs = snap.val() || {};
+                let attempted = 0, correct = 0;
+                Object.values(subs).forEach(s => {
+                    attempted++;
+                    if (s.isCorrect) correct++;
+                });
+                const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+                document.getElementById('home-total-attempted').innerText = attempted;
+                document.getElementById('home-overall-accuracy').innerText = accuracy;
+            } catch (error) {
+                console.error("載入進度失敗:", error);
+            }
+        }
 
         // ========== 前端：1. 選擇科目 ==========
         function renderSubjectSelection() {
@@ -337,12 +376,11 @@ const firebaseConfig = {
             });
         }
 
-        // ========== 前端：2. 選擇題型 (讀取數據庫結構) ==========
+        // ========== 前端：2. 選擇題型 ==========
         async function selectType(type) {
             currentType = type;
             document.getElementById('dash-type-name').innerText = type === 'mcq' ? '選擇題 (MCQ)' : '長問題 (LQ)';
             
-            // 根據 Subject 和 Type 讀取資料庫
             const snap = await db.ref(`problems/${currentSubjectId}/${type}`).once('value');
             currentProblems = snap.val() || {};
             
@@ -350,7 +388,7 @@ const firebaseConfig = {
             showView('dashboard-view');
         }
 
-        // ========== 前端：3. 渲染課題與隨機按鈕 ==========
+        // ========== 前端：3. 渲染課題 ==========
         function renderTopics() {
             const topicList = document.getElementById('topic-list');
             topicList.innerHTML = '';
@@ -370,27 +408,41 @@ const firebaseConfig = {
             });
         }
 
-        // ========== 前端：4. 測驗系統 (支援隨機與分題型) ==========
-function startQuiz(mode) {
+        // ========== 前端：4. 測驗系統 (含未作答過濾) ==========
+        async function startQuiz(mode) {
+            // 取得該學生目前的作答紀錄
+            const snap = await db.ref(`submissions/${currentUser.uid}`).once('value');
+            const userSubs = snap.val() || {};
+
             let list = Object.entries(currentProblems).map(([id, p]) => ({ id, ...p }));
             
             if (mode === 'random') {
-                // 移除 .slice(0, 10) 即可保留所有題目，僅做隨機打亂
+                // 過濾掉已經作答過的題目 (只保留 userSubs 裡面沒有的 ID)
+                list = list.filter(p => !userSubs[p.id]);
+                // 隨機打亂未作答題目
                 list = list.sort(() => Math.random() - 0.5); 
-                document.getElementById('question-topic-label').innerText = "隨機綜合測驗 (全部題目)";
+                document.getElementById('question-topic-label').innerText = "隨機測驗 (未作答)";
             } else {
-                list = list.filter(p => p.topic === mode); // 按課題篩選
+                list = list.filter(p => p.topic === mode);
                 document.getElementById('question-topic-label').innerText = mode;
             }
             
-            if(list.length === 0) { alert("沒有可用的題目！"); return; }
+            if(list.length === 0) { 
+                if (mode === 'random') {
+                    alert("🎉 太棒了！你已經完成了這個題型的所有題目，目前沒有未作答的題目了！");
+                } else {
+                    alert("此課題沒有可用的題目！"); 
+                }
+                return; 
+            }
+
             currentQuizList = list;
             quizIndex = 0;
             document.getElementById('quiz-subject-badge').innerText = SUBJECTS[currentSubjectId].name;
             renderQuestion();
             showView('quiz-view');
         }
-            
+
         function renderQuestion() {
             const p = currentQuizList[quizIndex];
             document.getElementById('quiz-progress-text').innerText = `${quizIndex + 1} / ${currentQuizList.length}`;
@@ -415,7 +467,7 @@ function startQuiz(mode) {
             } else {
                 mcqContainer.classList.add('hidden');
                 lqContainer.classList.remove('hidden');
-                document.getElementById('lq-answer-input').value = ""; // 清空輸入框
+                document.getElementById('lq-answer-input').value = "";
             }
         }
 
@@ -440,17 +492,15 @@ function startQuiz(mode) {
             });
             
             showFeedback(isCorrect, p);
-            
-            // 寫入作答紀錄
-            db.ref(`submissions/${currentUser.uid}/${p.id}`).update({ isCorrect, type: 'mcq', lastAttemptAt: Date.now() });
+            db.ref(`submissions/${currentUser.uid}/${p.id}`).update({ isCorrect, type: 'mcq', lastAttemptAt: Date.now() }).then(() => loadUserProgress());
         }
 
         // LQ 提交
         function submitLQ() {
             const p = currentQuizList[quizIndex];
-            document.getElementById('lq-container').classList.add('hidden'); // 隱藏輸入框
-            showFeedback(true, p, true); // 長問題統一顯示綠色參考答案
-            db.ref(`submissions/${currentUser.uid}/${p.id}`).update({ isCorrect: true, type: 'lq', lastAttemptAt: Date.now() });
+            document.getElementById('lq-container').classList.add('hidden');
+            showFeedback(true, p, true);
+            db.ref(`submissions/${currentUser.uid}/${p.id}`).update({ isCorrect: true, type: 'lq', lastAttemptAt: Date.now() }).then(() => loadUserProgress());
         }
 
         function showFeedback(isCorrect, p, isLQ = false) {
@@ -480,7 +530,7 @@ function startQuiz(mode) {
                 renderQuestion();
             } else {
                 alert("測驗完成！");
-                showView('dashboard-view');
+                goHome();
             }
         }
 
@@ -493,7 +543,7 @@ function startQuiz(mode) {
 
         async function loadAdminProblems() {
             const sid = document.getElementById('admin-subject-filter').value;
-            const type = document.getElementById('admin-type-filter').value; // mcq 或 lq
+            const type = document.getElementById('admin-type-filter').value;
             const tbody = document.getElementById('admin-problem-list');
             tbody.innerHTML = '<tr><td colspan="3" class="p-10 text-center text-gray-400">載入中...</td></tr>';
             
@@ -526,7 +576,6 @@ function startQuiz(mode) {
             const type = document.getElementById('admin-type-filter').value;
             document.getElementById('editor-title').innerText = pid ? "編輯題目" : "新增題目";
             
-            // 動態顯示或隱藏 MCQ 選項設定區塊
             document.getElementById('editor-mcq-section').style.display = type === 'mcq' ? 'grid' : 'none';
 
             if (pid && cachedAdminProblems[pid]) {
@@ -587,13 +636,11 @@ function startQuiz(mode) {
             loadAdminProblems();
         }
 
-        // 真實計算學生成績總覽
         async function loadAdminUsersProgress() {
             const list = document.getElementById('admin-users-list');
             list.innerHTML = '<tr><td colspan="5" class="p-10 text-center text-gray-400">數據計算中...</td></tr>';
             
             try {
-                // 同時抓取 users 與 submissions 節點
                 const [usersSnap, subsSnap] = await Promise.all([
                     db.ref('users').once('value'),
                     db.ref('submissions').once('value')
@@ -607,7 +654,6 @@ function startQuiz(mode) {
                     const uid = Object.keys(users)[index];
                     const userSubs = allSubs[uid] || {};
                     
-                    // 只計算選擇題 (mcq) 的正確率
                     const mcqSubs = Object.values(userSubs).filter(s => s.type === 'mcq' || s.type === undefined);
                     const attempted = mcqSubs.length;
                     const correct = mcqSubs.filter(s => s.isCorrect).length;
