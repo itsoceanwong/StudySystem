@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSE 溫習系統 Pro+</title>
+    <title>DSE 溫習系統 Pro MAX</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { darkMode: 'class', theme: { extend: {} } }</script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -16,6 +16,7 @@
         .view-section.active { display: block; animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .card { border-radius: 1rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); padding: 2rem; }
+        /* 進度條樣式 */
         .progress-bar-bg { background-color: #e5e7eb; border-radius: 9999px; overflow: hidden; height: 0.5rem; margin-top: 0.5rem; }
         .dark .progress-bar-bg { background-color: #374151; }
         .progress-bar-fill { background-color: #3b82f6; height: 100%; transition: width 0.5s ease-out; }
@@ -26,10 +27,10 @@
     <header class="bg-white dark:bg-gray-800 shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-50 border-b dark:border-gray-700">
         <div class="flex items-center space-x-4">
             <div class="font-bold text-xl text-blue-600 dark:text-blue-400 cursor-pointer" onclick="goHome()">DSE 溫習系統</div>
-            <button id="admin-btn" onclick="showView('admin-view')" class="hidden text-sm font-bold text-purple-600 bg-purple-50 dark:bg-gray-700 px-3 py-1 rounded-lg border border-purple-200 dark:border-purple-500/30">管理員後台</button>
+            <button id="admin-btn" onclick="showView('admin-view')" class="hidden text-sm font-bold text-purple-600 bg-purple-50 dark:bg-gray-700 px-3 py-1 rounded-lg border border-purple-200 dark:border-purple-500/30 transition">管理員後台</button>
         </div>
         <div class="flex items-center space-x-4">
-            <button onclick="toggleTheme()" id="theme-toggle" class="text-xl p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">☀️</button>
+            <button onclick="toggleTheme()" id="theme-toggle" class="text-xl p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">☀️</button>
             <div id="user-info" class="hidden flex items-center space-x-4 border-l pl-4 dark:border-gray-700">
                 <span id="user-name-display" class="text-sm font-medium text-gray-600 dark:text-gray-300"></span>
                 <button onclick="logout()" class="text-sm text-red-500 hover:underline font-bold">登出</button>
@@ -40,10 +41,10 @@
     <main class="max-w-[1000px] mx-auto p-4 mt-6">
         
         <div id="login-view" class="view-section active">
-            <div class="card bg-white dark:bg-gray-800 max-w-md mx-auto text-center mt-20">
+            <div class="card bg-white dark:bg-gray-800 max-w-md mx-auto text-center mt-20 transition-colors duration-300">
                 <h2 class="text-3xl font-bold mb-2">歡迎回來</h2>
                 <p class="text-gray-500 dark:text-gray-400 mb-8">請登入以開始溫習與紀錄進度</p>
-                <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-600 font-bold">
+                <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center space-x-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 py-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-600 transition shadow-sm font-bold">
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5">
                     <span>使用 Google 帳號登入</span>
                 </button>
@@ -51,7 +52,7 @@
         </div>
 
         <div id="home-view" class="view-section">
-            <div class="bg-gradient-to-r from-teal-400 to-blue-500 rounded-xl p-6 mb-8 text-white shadow-lg flex justify-between items-center">
+            <div class="bg-gradient-to-r from-teal-400 to-blue-500 rounded-xl p-6 mb-8 text-white shadow-lg flex justify-between items-center transition-transform hover:scale-[1.01]">
                 <div>
                     <h3 class="text-xl font-bold mb-1">📊 你的學習總覽</h3>
                     <p class="text-sm opacity-90">已作答題數：<span id="home-total-attempted" class="font-bold text-lg mx-1">0</span> 題</p>
@@ -122,7 +123,7 @@
             <div id="topic-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
         </div>
 
-        <div id="quiz-view" class="view-section card bg-white dark:bg-gray-800">
+        <div id="quiz-view" class="view-section card bg-white dark:bg-gray-800 transition-colors duration-300">
             <div class="flex justify-between items-center mb-6 border-b dark:border-gray-700 pb-4">
                 <div class="flex items-center space-x-3">
                     <span id="quiz-subject-badge" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-lg text-sm font-bold"></span>
@@ -153,12 +154,12 @@
                     
                     <div id="lq-self-grade-area" class="hidden flex space-x-4 mb-4 pt-4 border-t border-purple-200 dark:border-purple-800">
                         <span class="font-bold text-purple-800 dark:text-purple-300 self-center">誠實自我評估：</span>
-                        <button onclick="submitLQSelfGrade(true)" class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-600">✅ 我答對了</button>
-                        <button onclick="submitLQSelfGrade(false)" class="bg-red-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-600">❌ 我答錯了</button>
+                        <button onclick="submitLQSelfGrade(true)" class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-600">✅ 我答對了 / 概念正確</button>
+                        <button onclick="submitLQSelfGrade(false)" class="bg-red-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-600">❌ 我答錯了 / 概念模糊</button>
                     </div>
 
                     <div class="flex justify-between items-center mt-4">
-                        <button id="btn-prev" onclick="prevQuestion()" class="text-gray-500 dark:text-gray-400 font-bold hover:underline px-4 py-2 hidden">⬅️ 上一題</button>
+                        <button id="btn-prev" onclick="prevQuestion()" class="text-gray-500 dark:text-gray-400 font-bold hover:underline px-4 py-2 hidden">⬅️ 回到上一題</button>
                         <button id="btn-next" onclick="nextQuestion()" class="bg-blue-600 text-white px-8 py-2.5 rounded-lg font-bold hover:bg-blue-700 ml-auto">下一題 ➡️</button>
                     </div>
                 </div>
@@ -172,14 +173,14 @@
                     <div class="text-sm text-gray-500 font-bold mb-1">本次答對題數</div>
                     <div class="text-5xl font-extrabold text-blue-600"><span id="summary-score">0</span> <span class="text-2xl text-gray-400">/ <span id="summary-total">0</span></span></div>
                 </div>
-                <div class="space-x-4">
+                <div class="flex justify-center space-x-4">
                     <button onclick="goHome()" class="px-6 py-3 font-bold text-gray-600 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 rounded-xl transition">返回目錄</button>
                     <button onclick="retryWrongQuestionsInSession()" id="btn-retry-session" class="hidden px-6 py-3 bg-red-500 text-white font-bold hover:bg-red-600 rounded-xl shadow-lg transition">立刻重做錯題</button>
                 </div>
             </div>
         </div>
 
-        <div id="admin-view" class="view-section card bg-white dark:bg-gray-800">
+        <div id="admin-view" class="view-section card bg-white dark:bg-gray-800 transition-colors duration-300">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b dark:border-gray-700 pb-6">
                 <h2 class="text-2xl font-bold">⚙️ 管理員後台</h2>
                 <div class="flex bg-gray-100 dark:bg-gray-900 p-1 rounded-xl">
@@ -251,15 +252,56 @@
     <div id="problem-editor-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8 border dark:border-gray-700">
             <h3 id="editor-title" class="text-2xl font-bold mb-6">新增題目</h3>
-            <div class="flex justify-end space-x-4 mt-8">
-                <button onclick="closeProblemEditor()" class="px-6 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl">取消</button>
-                <button onclick="saveProblem()" class="px-8 py-2 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700">儲存題目</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                <div>
+                    <label class="block text-sm font-bold mb-2">課題 (Topic)</label>
+                    <input type="text" id="edit-topic" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-xl px-4 py-2 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2">難度</label>
+                    <select id="edit-difficulty" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-xl px-4 py-2 outline-none">
+                        <option value="簡單">簡單</option><option value="中等">中等</option><option value="困難">困難</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-bold mb-2">圖片網址 (可選)</label>
+                <input type="text" id="edit-image-url" placeholder="https://..." class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-xl px-4 py-2 outline-none">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-bold mb-2">題目敘述</label>
+                <textarea id="edit-question" rows="3" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-xl px-4 py-2 outline-none"></textarea>
+            </div>
+            
+            <div id="editor-mcq-section" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 bg-gray-50 dark:bg-gray-900 p-4 rounded-xl border dark:border-gray-700">
+                <div><label class="text-xs font-bold text-gray-400">選項 A</label><input type="text" id="edit-opt0" class="w-full border-b border-gray-300 dark:border-gray-600 bg-transparent py-1 outline-none"></div>
+                <div><label class="text-xs font-bold text-gray-400">選項 B</label><input type="text" id="edit-opt1" class="w-full border-b border-gray-300 dark:border-gray-600 bg-transparent py-1 outline-none"></div>
+                <div><label class="text-xs font-bold text-gray-400">選項 C</label><input type="text" id="edit-opt2" class="w-full border-b border-gray-300 dark:border-gray-600 bg-transparent py-1 outline-none"></div>
+                <div><label class="text-xs font-bold text-gray-400">選項 D</label><input type="text" id="edit-opt3" class="w-full border-b border-gray-300 dark:border-gray-600 bg-transparent py-1 outline-none"></div>
+                <div class="col-span-2 mt-2">
+                    <label class="block text-sm font-bold mb-2">正確答案</label>
+                    <select id="edit-correct" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-xl px-4 py-2 outline-none">
+                        <option value="0">選項 A</option><option value="1">選項 B</option><option value="2">選項 C</option><option value="3">選項 D</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <label class="block text-sm font-bold mb-2">答案解析 / 參考答案</label>
+                <textarea id="edit-explanation" rows="3" class="w-full border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-xl px-4 py-2 outline-none"></textarea>
+            </div>
+            
+            <div class="flex justify-end space-x-4">
+                <button onclick="closeProblemEditor()" class="px-6 py-2 font-bold hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition">取消</button>
+                <button onclick="saveProblem()" class="px-8 py-2 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition">儲存題目</button>
             </div>
         </div>
     </div>
 
     <script>
-        // 1. 初始化 Firebase (⚠️ 請替換為你的 Firebase Config)
+        // 1. 初始化 Firebase (⚠️ 請務必替換為你的 Firebase Config)
         const firebaseConfig = {
             apiKey: "AIzaSyBpgQN6lxrVQvGx3bcBfoEsPeao1U6jYoU",
             authDomain: "studysysten.firebaseapp.com",
@@ -281,7 +323,7 @@
         let currentProblems = {};
         let currentQuizList = [];
         let quizIndex = 0;
-        let sessionResults = []; // 紀錄本次測驗的對錯結果
+        let sessionResults = [];
         let cachedAdminProblems = {};
         let currentEditingProblemId = null;
 
@@ -305,6 +347,7 @@
             document.getElementById('theme-toggle').innerText = '🌙';
         }
 
+        // ========== 視圖導航與狀態保存 ==========
         function showView(viewId) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
@@ -317,6 +360,31 @@
                 loadUserProgress();
                 showView('home-view');
             } else { showView('login-view'); }
+        }
+
+        function saveQuizState() {
+            if (currentQuizList.length > 0) {
+                sessionStorage.setItem('quizState', JSON.stringify({
+                    subjectId: currentSubjectId, type: currentType,
+                    quizList: currentQuizList, index: quizIndex, results: sessionResults
+                }));
+            }
+        }
+
+        function restoreQuizState() {
+            const state = JSON.parse(sessionStorage.getItem('quizState'));
+            if (state && state.quizList && state.quizList.length > 0) {
+                currentSubjectId = state.subjectId; currentType = state.type;
+                currentQuizList = state.quizList; quizIndex = state.index; sessionResults = state.results || [];
+                document.getElementById('quiz-subject-badge').innerText = SUBJECTS[currentSubjectId].name;
+                
+                document.getElementById('quiz-summary').classList.add('hidden');
+                document.getElementById('quiz-content').classList.remove('hidden');
+                renderQuestion();
+                showView('quiz-view');
+                return true;
+            }
+            return false;
         }
 
         // ========== 身份驗證 ==========
@@ -337,8 +405,11 @@
                 if (userData && userData.role === 'admin') document.getElementById('admin-btn').classList.remove('hidden');
                 
                 renderSubjectSelection();
-                loadUserProgress();
-                showView('home-view');
+                
+                if (!restoreQuizState()) {
+                    loadUserProgress();
+                    showView('home-view');
+                }
             } else {
                 currentUser = null;
                 document.getElementById('user-info').classList.add('hidden');
@@ -357,7 +428,7 @@
             document.getElementById('home-overall-accuracy').innerText = accuracy;
         }
 
-        // ========== 前端業務邏輯 ==========
+        // ========== 前端：1. 選擇科目 ==========
         function renderSubjectSelection() {
             const list = document.getElementById('subject-list');
             list.innerHTML = '';
@@ -385,7 +456,6 @@
             showView('dashboard-view');
         }
 
-        // 渲染課題列表 (加入課題進度分析)
         async function renderTopics() {
             const topicList = document.getElementById('topic-list');
             topicList.innerHTML = '<p class="col-span-2 text-center text-gray-400 py-10">載入進度中...</p>';
@@ -396,19 +466,15 @@
                 return;
             }
 
-            // 取得使用者作答紀錄以計算各課題進度
             const userSubsSnap = await db.ref(`submissions/${currentUser.uid}`).once('value');
             const userSubs = userSubsSnap.val() || {};
 
             topicList.innerHTML = '';
             topics.forEach(t => {
-                // 篩選出屬於這個課題的所有題目
                 const topicProblems = Object.entries(currentProblems).filter(([id, p]) => p.topic === t);
                 const totalInTopic = topicProblems.length;
                 
-                // 計算進度
-                let attemptedInTopic = 0;
-                let correctInTopic = 0;
+                let attemptedInTopic = 0; let correctInTopic = 0;
                 topicProblems.forEach(([id, p]) => {
                     if (userSubs[id]) {
                         attemptedInTopic++;
@@ -420,9 +486,7 @@
                 const accuracyRate = attemptedInTopic > 0 ? Math.round((correctInTopic / attemptedInTopic) * 100) : 0;
                 
                 let accuracyColor = 'text-gray-400';
-                if(attemptedInTopic > 0) {
-                    accuracyColor = accuracyRate >= 70 ? 'text-green-500' : (accuracyRate >= 40 ? 'text-yellow-500' : 'text-red-500');
-                }
+                if(attemptedInTopic > 0) accuracyColor = accuracyRate >= 70 ? 'text-green-500' : (accuracyRate >= 40 ? 'text-yellow-500' : 'text-red-500');
 
                 const btn = document.createElement('button');
                 btn.className = "card text-left p-5 hover:bg-blue-50 dark:hover:bg-gray-700 transition border-l-4 border-blue-500 flex flex-col justify-between";
@@ -446,7 +510,6 @@
             const snap = await db.ref(`submissions/${currentUser.uid}`).once('value');
             const userSubs = snap.val() || {};
             
-            // 讀取收藏紀錄
             const bmSnap = await db.ref(`bookmarks/${currentUser.uid}`).once('value');
             const userBookmarks = bmSnap.val() || {};
 
@@ -476,14 +539,13 @@
 
             currentQuizList = list; 
             quizIndex = 0;
-            sessionResults = new Array(list.length).fill(null); // 初始化本次成績紀錄
+            sessionResults = new Array(list.length).fill(null);
             
             document.getElementById('quiz-subject-badge').innerText = SUBJECTS[currentSubjectId].name;
-            
-            // 隱藏結算畫面，顯示測驗內容
             document.getElementById('quiz-summary').classList.add('hidden');
             document.getElementById('quiz-content').classList.remove('hidden');
             
+            saveQuizState();
             renderQuestion();
             showView('quiz-view');
         }
@@ -497,7 +559,6 @@
             if(p.imageUrl) { imgEl.src = p.imageUrl; imgEl.classList.remove('hidden'); }
             else { imgEl.classList.add('hidden'); }
 
-            // 處理收藏星星狀態
             const starBtn = document.getElementById('btn-bookmark');
             const isBookmarked = await db.ref(`bookmarks/${currentUser.uid}/${p.id}`).once('value').then(s => s.exists());
             starBtn.innerText = isBookmarked ? '★' : '☆';
@@ -527,7 +588,6 @@
             }
         }
 
-        // 收藏/取消收藏功能
         async function toggleBookmark() {
             const p = currentQuizList[quizIndex];
             const ref = db.ref(`bookmarks/${currentUser.uid}/${p.id}`);
@@ -550,7 +610,7 @@
         function checkMCQAnswer(selectedIdx) {
             const p = currentQuizList[quizIndex];
             const isCorrect = selectedIdx === p.correctOptionIndex;
-            sessionResults[quizIndex] = isCorrect; // 紀錄本次結算用
+            sessionResults[quizIndex] = isCorrect; 
             
             const buttons = document.getElementById('options-container').querySelectorAll('.option-btn');
             buttons.forEach((btn, idx) => {
@@ -576,7 +636,7 @@
 
         function submitLQSelfGrade(isCorrect) {
             const p = currentQuizList[quizIndex];
-            sessionResults[quizIndex] = isCorrect; // 紀錄本次結算用
+            sessionResults[quizIndex] = isCorrect; 
             document.getElementById('lq-self-grade-area').classList.add('hidden'); 
             db.ref(`submissions/${currentUser.uid}/${p.id}`).update({ isCorrect, type: 'lq', lastAttemptAt: Date.now() });
             
@@ -616,15 +676,15 @@
         function nextQuestion() {
             quizIndex++;
             if (quizIndex < currentQuizList.length) {
-                renderQuestion();
+                saveQuizState(); renderQuestion();
             } else {
-                showQuizSummary(); // 進入結算畫面
+                sessionStorage.removeItem('quizState');
+                showQuizSummary(); 
             }
         }
-        function prevQuestion() { if(quizIndex > 0) { quizIndex--; renderQuestion(); } }
+        function prevQuestion() { if(quizIndex > 0) { quizIndex--; saveQuizState(); renderQuestion(); } }
         function exitQuiz() { if(confirm("確定要離開測驗嗎？目前的進度將會遺失。")) goHome(); }
 
-        // 結算畫面邏輯
         function showQuizSummary() {
             document.getElementById('quiz-content').classList.add('hidden');
             const summaryDiv = document.getElementById('quiz-summary');
@@ -636,12 +696,10 @@
             document.getElementById('summary-score').innerText = correctCount;
             document.getElementById('summary-total').innerText = total;
 
-            // 若有錯題，顯示「重做錯題」按鈕
             const hasMistakes = sessionResults.includes(false);
             document.getElementById('btn-retry-session').classList.toggle('hidden', !hasMistakes);
         }
 
-        // 只重做本次測驗錯的題目
         function retryWrongQuestionsInSession() {
             const wrongQuestions = currentQuizList.filter((_, idx) => sessionResults[idx] === false);
             currentQuizList = wrongQuestions;
@@ -651,12 +709,194 @@
             document.getElementById('quiz-summary').classList.add('hidden');
             document.getElementById('quiz-content').classList.remove('hidden');
             document.getElementById('question-topic-label').innerText = "錯題覆盤";
+            saveQuizState();
             renderQuestion();
         }
 
-        // ========== 後台與其他代碼保留 (略去修改) ==========
-        // ... (為了確保能運作，請確保上述的 HTML 已完整複製了 Admin 相關的 View 與 Script 邏輯) ...
-        // 管理員相關腳本，請直接銜接上方你原有的 Admin JS 代碼即可。
+        // ========== 管理員後台邏輯 ==========
+        function switchAdminTab(tab) {
+            document.getElementById('admin-problems-section').classList.toggle('hidden', tab !== 'problems');
+            document.getElementById('admin-users-section').classList.toggle('hidden', tab !== 'users');
+            if (tab === 'users') loadAdminUsersProgress();
+            else loadAdminProblems();
+        }
+
+        async function loadAdminProblems() {
+            const sid = document.getElementById('admin-subject-filter').value;
+            const type = document.getElementById('admin-type-filter').value;
+            const tbody = document.getElementById('admin-problem-list');
+            tbody.innerHTML = '<tr><td colspan="3" class="p-10 text-center text-gray-400">載入中...</td></tr>';
+            
+            const snap = await db.ref(`problems/${sid}/${type}`).once('value');
+            cachedAdminProblems = snap.val() || {};
+            tbody.innerHTML = '';
+            
+            if (Object.keys(cachedAdminProblems).length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="p-10 text-center text-gray-400">尚未建立題目</td></tr>';
+                return;
+            }
+            
+            Object.entries(cachedAdminProblems).forEach(([id, p]) => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors";
+                tr.innerHTML = `
+                    <td class="px-4 py-4"><div class="font-bold">${p.topic}</div><div class="text-[10px] text-gray-400">${id}</div></td>
+                    <td class="px-4 py-4 truncate max-w-[300px]">${p.question}</td>
+                    <td class="px-4 py-4 text-center">
+                        <button onclick="showProblemEditor('${id}')" class="text-blue-500 mr-2 hover:underline font-bold">編輯</button>
+                        <button onclick="deleteProblem('${id}')" class="text-red-500 hover:underline font-bold">刪除</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function handleJSONImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    const sid = document.getElementById('admin-subject-filter').value;
+                    const type = document.getElementById('admin-type-filter').value;
+                    await db.ref(`problems/${sid}/${type}`).update(data);
+                    alert("✅ 題庫批次匯入成功！");
+                    loadAdminProblems();
+                } catch(error) { alert("❌ 匯入失敗：JSON 格式錯誤或網路異常。"); }
+            };
+            reader.readAsText(file);
+        }
+
+        function showProblemEditor(pid = null) {
+            currentEditingProblemId = pid;
+            const type = document.getElementById('admin-type-filter').value;
+            document.getElementById('editor-title').innerText = pid ? "編輯題目" : "新增題目";
+            document.getElementById('editor-mcq-section').style.display = type === 'mcq' ? 'grid' : 'none';
+
+            if (pid && cachedAdminProblems[pid]) {
+                const p = cachedAdminProblems[pid];
+                document.getElementById('edit-topic').value = p.topic || "";
+                document.getElementById('edit-difficulty').value = p.difficulty || "簡單";
+                document.getElementById('edit-question').value = p.question || "";
+                document.getElementById('edit-image-url').value = p.imageUrl || "";
+                if(type === 'mcq') {
+                    document.getElementById('edit-opt0').value = p.options ? p.options[0] : "";
+                    document.getElementById('edit-opt1').value = p.options ? p.options[1] : "";
+                    document.getElementById('edit-opt2').value = p.options ? p.options[2] : "";
+                    document.getElementById('edit-opt3').value = p.options ? p.options[3] : "";
+                    document.getElementById('edit-correct').value = p.correctOptionIndex || 0;
+                }
+                document.getElementById('edit-explanation').value = p.explanation || "";
+            } else {
+                document.getElementById('edit-topic').value = ""; document.getElementById('edit-question').value = "";
+                document.getElementById('edit-image-url').value = ""; document.getElementById('edit-explanation').value = "";
+            }
+            document.getElementById('problem-editor-modal').classList.remove('hidden');
+        }
+
+        function closeProblemEditor() { document.getElementById('problem-editor-modal').classList.add('hidden'); }
+
+        async function saveProblem() {
+            const sid = document.getElementById('admin-subject-filter').value;
+            const type = document.getElementById('admin-type-filter').value;
+            const pid = currentEditingProblemId || (`${type}_` + Date.now());
+            
+            const data = {
+                topic: document.getElementById('edit-topic').value.trim(),
+                difficulty: document.getElementById('edit-difficulty').value,
+                question: document.getElementById('edit-question').value.trim(),
+                imageUrl: document.getElementById('edit-image-url').value.trim(),
+                explanation: document.getElementById('edit-explanation').value.trim()
+            };
+            if (type === 'mcq') {
+                data.options = [ document.getElementById('edit-opt0').value.trim(), document.getElementById('edit-opt1').value.trim(), document.getElementById('edit-opt2').value.trim(), document.getElementById('edit-opt3').value.trim() ];
+                data.correctOptionIndex = parseInt(document.getElementById('edit-correct').value);
+            }
+            
+            await db.ref(`problems/${sid}/${type}/${pid}`).set(data);
+            closeProblemEditor(); loadAdminProblems();
+        }
+
+        async function deleteProblem(pid) {
+            if (!confirm("確定刪除？這也會一併刪除學生對此題的作答紀錄！")) return;
+            const sid = document.getElementById('admin-subject-filter').value;
+            const type = document.getElementById('admin-type-filter').value;
+            
+            await db.ref(`problems/${sid}/${type}/${pid}`).remove();
+            
+            const subsRef = db.ref('submissions');
+            const subsSnap = await subsRef.once('value');
+            if(subsSnap.exists()){
+                const updates = {};
+                subsSnap.forEach(userNode => { if(userNode.hasChild(pid)) updates[`${userNode.key}/${pid}`] = null; });
+                await subsRef.update(updates);
+            }
+            loadAdminProblems();
+        }
+
+        // ========== 用戶權限與刪除功能 ==========
+        async function changeUserRole(uid, newRole) {
+            if (!confirm(`確定要將該用戶設為「${newRole === 'admin' ? '管理員' : '一般用戶'}」嗎？`)) return;
+            try {
+                await db.ref(`users/${uid}`).update({ role: newRole });
+                loadAdminUsersProgress();
+            } catch (e) { alert("權限更新失敗：" + e.message); }
+        }
+
+        async function deleteUserAccount(uid, userName) {
+            if (!confirm(`⚠️ 警告：確定要徹底刪除用戶「${userName}」的所有資料嗎？\n此操作將會刪除其權限與所有作答紀錄（無法復原）。`)) return;
+            try {
+                await db.ref(`users/${uid}`).remove();
+                await db.ref(`submissions/${uid}`).remove();
+                await db.ref(`bookmarks/${uid}`).remove();
+                alert("用戶資料與學習紀錄已成功刪除！");
+                loadAdminUsersProgress();
+            } catch (e) { alert("刪除失敗：" + e.message); }
+        }
+
+        async function loadAdminUsersProgress() {
+            const list = document.getElementById('admin-users-list');
+            list.innerHTML = '<tr><td colspan="5" class="p-10 text-center text-gray-400">數據計算中...</td></tr>';
+            try {
+                const [usersSnap, subsSnap] = await Promise.all([ db.ref('users').once('value'), db.ref('submissions').once('value') ]);
+                const users = usersSnap.val() || {}; const allSubs = subsSnap.val() || {};
+                list.innerHTML = '';
+                
+                Object.values(users).forEach((u, index) => {
+                    const uid = Object.keys(users)[index];
+                    const userSubs = allSubs[uid] || {};
+                    const attempted = Object.keys(userSubs).length;
+                    const correct = Object.values(userSubs).filter(s => s.isCorrect).length;
+                    const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+                    
+                    const isSelf = (uid === currentUser.uid);
+                    let actionHTML = '';
+                    
+                    if (isSelf) {
+                        actionHTML = '<span class="text-gray-400 text-xs font-bold bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">目前帳號 (防呆鎖定)</span>';
+                    } else {
+                        const roleBtn = u.role === 'admin' 
+                            ? `<button onclick="changeUserRole('${uid}', 'user')" class="text-orange-500 font-bold hover:underline text-xs bg-orange-50 dark:bg-gray-700 px-2 py-1 rounded border border-orange-200 dark:border-gray-600 mr-2">降為用戶</button>`
+                            : `<button onclick="changeUserRole('${uid}', 'admin')" class="text-green-600 font-bold hover:underline text-xs bg-green-50 dark:bg-gray-700 px-2 py-1 rounded border border-green-200 dark:border-gray-600 mr-2">升為管理員</button>`;
+                        
+                        const delBtn = `<button onclick="deleteUserAccount('${uid}', '${u.name || '未知'}')" class="text-red-500 font-bold hover:underline text-xs bg-red-50 dark:bg-gray-700 px-2 py-1 rounded border border-red-200 dark:border-gray-600">刪除帳戶</button>`;
+                        actionHTML = `<div class="flex justify-center items-center">${roleBtn}${delBtn}</div>`;
+                    }
+
+                    const tr = document.createElement('tr');
+                    tr.className = "border-b dark:border-gray-700 hover:bg-gray-50 dark:bg-gray-800 transition-colors";
+                    tr.innerHTML = `
+                        <td class="px-4 py-4 font-bold">${u.name}<div class="text-[10px] text-gray-500">${u.email}</div></td>
+                        <td class="px-4 py-4 text-center text-xs">${u.role === 'admin' ? '<span class="text-purple-600 font-bold bg-purple-100 dark:bg-purple-900/30 px-2 py-1 rounded-full">⭐ 管理員</span>' : '<span class="text-gray-500">👤 用戶</span>'}</td>
+                        <td class="px-4 py-4 text-center">${attempted}</td>
+                        <td class="px-4 py-4 text-center font-bold ${accuracy > 60 ? 'text-blue-500' : 'text-red-500'}">${accuracy}%</td>
+                        <td class="px-4 py-4 text-center">${actionHTML}</td>
+                    `;
+                    list.appendChild(tr);
+                });
+            } catch(e) { list.innerHTML = '<tr><td colspan="5" class="p-10 text-center text-red-500">讀取失敗：權限不足或網路異常</td></tr>'; }
+        }
     </script>
 </body>
 </html>
