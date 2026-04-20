@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSE 溫習系統</title>
+    <title>DSE 溫習系統 Pro MAX (柱狀圖優化版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { darkMode: 'class', theme: { extend: {} } }</script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -68,11 +68,19 @@
             <div id="home-subject-stats" class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
                 </div>
 
-            <h3 class="text-lg font-bold mb-3 px-1 text-gray-700 dark:text-gray-300">課題熟悉度分析 (各課題正確率)</h3>
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border dark:border-gray-700 mb-8 flex justify-center items-center relative min-h-[300px]">
-                <div id="chart-empty-state" class="absolute text-gray-400 text-sm font-bold">尚無足夠的作答數據繪製圖表</div>
-                <div class="w-full max-w-md">
-                    <canvas id="topic-accuracy-chart"></canvas>
+            <div class="flex justify-between items-center mb-3 px-1">
+                <h3 class="text-lg font-bold text-gray-700 dark:text-gray-300">課題熟悉度分析 (正確率)</h3>
+                <select id="chart-subject-filter" onchange="renderTopicChart(this.value)" class="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg px-3 py-1 text-sm font-bold outline-none shadow-sm cursor-pointer">
+                    <option value="all">全部分類</option>
+                </select>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border dark:border-gray-700 mb-8 relative">
+                <div id="chart-empty-state" class="absolute inset-0 flex items-center justify-center text-gray-400 text-sm font-bold z-10 bg-white/80 dark:bg-gray-800/80 rounded-xl">尚無足夠的作答數據繪製圖表</div>
+                <div class="w-full overflow-x-auto">
+                    <div id="chart-container" class="min-w-[500px] transition-all duration-300" style="height: 300px;">
+                        <canvas id="topic-accuracy-chart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -248,7 +256,7 @@
     </div>
 
     <script>
-        // 1. 初始化 Firebase (⚠️ 請更換金鑰)
+        // 1. 初始化 Firebase (⚠️ 請更換為你的 Firebase Config)
         const firebaseConfig = {
             apiKey: "AIzaSyBpgQN6lxrVQvGx3bcBfoEsPeao1U6jYoU",
             authDomain: "studysysten.firebaseapp.com",
@@ -270,8 +278,15 @@
         let currentProblems = {}, currentQuizList = [], quizIndex = 0, sessionResults = [];
         let cachedAdminProblems = {}, currentEditingProblemId = null;
         
-        // 📊 Chart.js 實例變數
+        // 📊 Chart.js 全域變數
         let topicChartInstance = null;
+        let globalTopicStats = {}; // 儲存全局分析數據供過濾器使用
+
+        // 定義科目的 Tailwind 顏色代碼映射，用於畫圖表
+        const COLOR_HEX_MAP = {
+            'blue': '#3b82f6', 'green': '#10b981', 'red': '#ef4444', 
+            'orange': '#f97316', 'purple': '#8b5cf6'
+        };
 
         const SUBJECTS = {
             "sub_ict": { name: "資訊科技", icon: "💻", color: "blue" },
@@ -287,13 +302,19 @@
             const isDark = document.documentElement.classList.contains('dark');
             document.getElementById('theme-toggle').innerText = isDark ? '☀️' : '🌙';
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            // 重新設定 Chart.js 的字體顏色以符合深/淺色模式
-            Chart.defaults.color = isDark ? '#e5e7eb' : '#374151';
-            if (topicChartInstance) topicChartInstance.update();
+            
+            // 同步更新圖表的字體與網格顏色
+            Chart.defaults.color = isDark ? '#9ca3af' : '#4b5563';
+            if (topicChartInstance) {
+                topicChartInstance.options.scales.x.grid.color = isDark ? '#374151' : '#e5e7eb';
+                topicChartInstance.options.scales.y.grid.color = isDark ? '#374151' : '#e5e7eb';
+                topicChartInstance.update();
+            }
         }
         if (localStorage.getItem('theme') === 'light') { document.documentElement.classList.remove('dark'); }
-        // 初始化 Chart.js 全局字體顏色
-        Chart.defaults.color = document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#374151';
+        // 初始化 Chart.js 默認字體顏色
+        Chart.defaults.color = document.documentElement.classList.contains('dark') ? '#9ca3af' : '#4b5563';
+        Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
 
         function showView(viewId) {
             if (viewId === 'admin-view' && currentUserRole !== 'admin') { alert("⚠️ 權限不足！"); return; }
@@ -330,15 +351,14 @@
             }
         });
 
-        // ========== 📊 核心：加載用戶進度與數據視覺化 ==========
+        // ========== 📊 數據處理與視覺化 ==========
         async function loadUserProgress() {
             if (!currentUser) return;
             
-            // 顯示載入中
             document.getElementById('home-total-attempted').innerText = "...";
             document.getElementById('home-overall-accuracy').innerText = "...";
 
-            // 1. 同時拉取「作答紀錄」與「全站題庫」(建立 Mapping)
+            // 1. 同時拉取「作答紀錄」與「全站題庫」
             const [subsSnap, probsSnap] = await Promise.all([
                 db.ref(`submissions/${currentUser.uid}`).once('value'),
                 db.ref('problems').once('value')
@@ -359,10 +379,18 @@
 
             let totalAttempted = 0, totalCorrect = 0;
             const subjectStats = {};
-            const topicStats = {};
-            Object.keys(SUBJECTS).forEach(s => subjectStats[s] = { attempted: 0, correct: 0 });
+            globalTopicStats = {}; // 重置全局數據
+            
+            // 準備科目選單與數據架構
+            const filterSelect = document.getElementById('chart-subject-filter');
+            filterSelect.innerHTML = '<option value="all">全部分類</option>';
 
-            // 2. 分析數據
+            Object.keys(SUBJECTS).forEach(sid => {
+                subjectStats[sid] = { attempted: 0, correct: 0 };
+                filterSelect.innerHTML += `<option value="${sid}">${SUBJECTS[sid].name}</option>`;
+            });
+
+            // 2. 分析作答紀錄
             Object.keys(subs).forEach(pId => {
                 const isCorrect = subs[pId].isCorrect;
                 totalAttempted++;
@@ -376,25 +404,24 @@
                         if (isCorrect) subjectStats[pInfo.subjectId].correct++;
                     }
                     // 課題層級數據
-                    if (!topicStats[pInfo.topic]) topicStats[pInfo.topic] = { attempted: 0, correct: 0 };
-                    topicStats[pInfo.topic].attempted++;
-                    if (isCorrect) topicStats[pInfo.topic].correct++;
+                    if (!globalTopicStats[pInfo.topic]) {
+                        globalTopicStats[pInfo.topic] = { attempted: 0, correct: 0, subjectId: pInfo.subjectId };
+                    }
+                    globalTopicStats[pInfo.topic].attempted++;
+                    if (isCorrect) globalTopicStats[pInfo.topic].correct++;
                 }
             });
 
-            // 3. 渲染總覽
+            // 3. 渲染總覽與卡片
             const overallAcc = totalAttempted > 0 ? Math.round((totalCorrect / totalAttempted) * 100) : 0;
             document.getElementById('home-total-attempted').innerText = totalAttempted;
             document.getElementById('home-overall-accuracy').innerText = overallAcc;
-
-            // 4. 渲染「各科作答表現卡片」
             renderSubjectStatsUI(subjectStats);
 
-            // 5. 渲染「課題熟悉度圓餅圖 (Pie Chart)」
-            renderTopicPieChart(topicStats);
+            // 4. 預設繪製「全部分類」的橫向柱狀圖
+            renderTopicChart('all');
         }
 
-        // 渲染科目卡片
         function renderSubjectStatsUI(subjectStats) {
             const container = document.getElementById('home-subject-stats');
             container.innerHTML = '';
@@ -417,54 +444,77 @@
             });
         }
 
-        // 渲染 Chart.js 圓餅圖
-        function renderTopicPieChart(topicStats) {
+        // 🌟 繪製柱狀圖
+        function renderTopicChart(subjectFilter) {
             const ctx = document.getElementById('topic-accuracy-chart').getContext('2d');
             const emptyState = document.getElementById('chart-empty-state');
+            const chartContainer = document.getElementById('chart-container');
             
             const labels = [];
             const data = [];
-            // 色盤
-            const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316', '#64748b'];
-            
-            // 過濾並計算各課題正確率
-            Object.keys(topicStats).forEach((topic) => {
-                const stats = topicStats[topic];
-                if (stats.attempted > 0) {
+            const bgColors = [];
+
+            // 根據選擇的過濾器提取數據
+            Object.keys(globalTopicStats).forEach(topic => {
+                const stats = globalTopicStats[topic];
+                if (stats.attempted > 0 && (subjectFilter === 'all' || stats.subjectId === subjectFilter)) {
                     labels.push(topic);
-                    data.push(Math.round((stats.correct / stats.attempted) * 100)); 
+                    data.push(Math.round((stats.correct / stats.attempted) * 100));
+                    // 根據科目取得對應的 HEX 顏色
+                    bgColors.push(COLOR_HEX_MAP[SUBJECTS[stats.subjectId].color] || '#3b82f6');
                 }
             });
 
+            // 處理無數據的情況
             if (labels.length === 0) {
-                emptyState.style.display = 'block';
+                emptyState.style.display = 'flex';
                 if (topicChartInstance) { topicChartInstance.destroy(); topicChartInstance = null; }
                 return;
             } else {
                 emptyState.style.display = 'none';
             }
 
+            // 動態調整 Canvas 高度，防止項目太多時柱子被擠扁 (每個 label 分配約 40px 高度)
+            const requiredHeight = Math.max(300, labels.length * 40);
+            chartContainer.style.height = `${requiredHeight}px`;
+
             if (topicChartInstance) { topicChartInstance.destroy(); }
             
+            const isDark = document.documentElement.classList.contains('dark');
+
             topicChartInstance = new Chart(ctx, {
-                type: 'pie', // 使用圓餅圖
+                type: 'bar', // 使用柱狀圖
                 data: {
                     labels: labels,
                     datasets: [{
                         label: '正確率 (%)',
                         data: data,
-                        backgroundColor: colors.slice(0, data.length),
-                        borderWidth: 2,
-                        borderColor: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff'
+                        backgroundColor: bgColors,
+                        borderRadius: 4,
+                        barPercentage: 0.7
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false, // 允許自訂高度
+                    indexAxis: 'y', // 將柱狀圖轉為橫向 (長字串更容易閱讀)
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100, // 正確率滿分為 100
+                            grid: { color: isDark ? '#374151' : '#e5e7eb' },
+                            ticks: { stepSize: 20 }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { autoSkip: false, font: { size: 11 } } // 禁止跳過任何標籤
+                        }
+                    },
                     plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15 } },
+                        legend: { display: false }, // 橫向柱狀圖不需要圖例
                         tooltip: {
                             callbacks: {
-                                label: function(context) { return ` ${context.label}: ${context.raw}% 正確率`; }
+                                label: function(context) { return ` 正確率: ${context.raw}%`; }
                             }
                         }
                     }
@@ -485,7 +535,6 @@
             });
         }
 
-        // ... (以下為原本的 selectType, renderTopics, startQuiz, checkMCQ, showSummary, Admin 等函數，與上一版本 100% 相同，為確保功能完整請保留原本程式碼接續在此) ...
         async function selectType(type) {
             currentType = type;
             document.getElementById('dash-subject-name').innerText = SUBJECTS[currentSubjectId].name;
