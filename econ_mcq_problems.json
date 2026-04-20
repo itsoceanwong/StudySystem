@@ -1,0 +1,1303 @@
+{
+  "econ_mcq_001": {
+    "topic": "01A-選擇、機會成本與利息",
+    "difficulty": "簡單",
+    "question": "（DSE 2015）下列哪項關於「機會成本」的描述是正確的？",
+    "options": [
+      "它是指生產某貨品所支付的金錢代價",
+      "它是指在選擇中被放棄的選項中價值最高者",
+      "當一個人的選擇增加時，其機會成本必然下降",
+      "它只存在於市場經濟中"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "機會成本的定義是所放棄的選擇中價值最高者，與金錢或市場形式無關。"
+  },
+  "econ_mcq_002": {
+    "topic": "01A-選擇、機會成本與利息",
+    "difficulty": "中等",
+    "question": "小明打算用 $20 買一包薯片。他原本打算用這 $20 買一本書。若書商現在提供折扣使書價降至 $10，小明買薯片的機會成本會：",
+    "options": [
+      "增加",
+      "減少",
+      "不變",
+      "變為零"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "書價下降意味着同樣的 $20 現在可以買到兩本書，放棄的選擇（書）的數量增加，價值上升，故買薯片的成本增加。"
+  },
+  "econ_mcq_003": {
+    "topic": "02A-物品與產權",
+    "difficulty": "簡單",
+    "question": "（DSE 2018）以下哪一項對社會而言是「免費物品」？",
+    "options": [
+      "在公園裡呼吸的空氣",
+      "電視台發放的免費數位廣播訊號",
+      "超市派發的試食餅乾",
+      "圖書館提供的免費報紙"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "免費物品是指在邊際上不需要放棄任何資源來生產的物品，空氣符合此定義。其餘選項均需投入生產資源。"
+  },
+  "econ_mcq_004": {
+    "topic": "09A-失業與就業不足",
+    "difficulty": "中等",
+    "question": "根據以下資料，計算該經濟的失業率：\n就業人口：2,931,000\n失業人口：69,000\n非勞動人口：1,000,000",
+    "options": [
+      "2.27%",
+      "2.30%",
+      "3.36%",
+      "6.90%"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "勞動人口 = 2,931,000 + 69,000 = 3,000,000。失業率 = (69,000 / 3,000,000) * 100% = 2.3%。"
+  },
+  "econ_mcq_005": {
+    "topic": "10A-本地生產總值",
+    "difficulty": "簡單",
+    "question": "下列哪項應計算在香港的本地生產總值 (GDP) 內？",
+    "options": [
+      "香港居民在紐約證券交易所買賣股票的佣金",
+      "外籍家庭傭工在香港提供的勞務價值",
+      "香港公司在內地工廠獲得的利潤",
+      "二手車行售出的二手車成交額"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "GDP 計算常住生產單位的產出，外傭在港服務屬於此範疇。利潤歸於內地 GDP，二手車成交額屬於重複計算。"
+  },
+  "econ_mcq_006": {
+    "topic": "10A-本地生產總值",
+    "difficulty": "中等",
+    "question": "若某年的名義 GDP 增長率為 6%，而通脹率為 2%，則實質 GDP 增長率大約為：",
+    "options": [
+      "8%",
+      "6%",
+      "4%",
+      "3%"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "實質 GDP 增長率 ≈ 名義增長率 - 通脹率 = 6% - 2% = 4%。"
+  },
+  "econ_mcq_007": {
+    "topic": "03A-需求與供應",
+    "difficulty": "困難",
+    "question": "（DSE 2021）若某產品的互補品價格下降，且生產該產品的技術提升，其均衡價格與產量會如何變化？",
+    "options": [
+      "價格下降，產量上升",
+      "價格上升，產量不確定",
+      "價格不確定，產量上升",
+      "價格與產量均不確定"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "互補品降價使需求上升 (D↑)，技術提升使供應上升 (S↑)。兩者均使產量上升 (Q↑)，但價格變動方向相反，故不確定。"
+  },
+  "econ_mcq_008": {
+    "topic": "05A-市場干預",
+    "difficulty": "中等",
+    "question": "政府對某貨品徵收從量稅，會導致該貨品的：",
+    "options": [
+      "需求曲線向左移",
+      "供應曲線向左移（向上移）",
+      "需求量增加",
+      "供應量增加"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "徵稅增加生產成本，使供應曲線垂直向上（向左）位移。"
+  },
+  "econ_mcq_009": {
+    "topic": "04A-價格彈性",
+    "difficulty": "簡單",
+    "question": "若某貨品的價格彈性大於 1，廠商提高售價會導致總收入：",
+    "options": [
+      "增加",
+      "減少",
+      "不變",
+      "視乎成本而定"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "彈性大於 1 (Ed > 1) 代表需求量變動百分比大於價格變動，加價會使總收入減少。"
+  },
+  "econ_mcq_010": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "簡單",
+    "question": "分工（Division of Labour）能提高生產力，主要是因為：",
+    "options": [
+      "工人可以專注於某一工序，提高熟練程度",
+      "節省轉換工具的時間",
+      "有利於機器自動化",
+      "以上皆是"
+    ],
+    "correctOptionIndex": 3,
+    "explanation": "以上三項均是經濟學大師亞當·斯密提出的分工優點。"
+  },
+  "econ_mcq_011": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "中等",
+    "question": "下列哪項屬於連鎖擴張（Lateral Integration）？",
+    "options": [
+      "航空公司與酒店合併",
+      "快餐店與農場合併",
+      "超市與電器行合併",
+      "兩間規模相近的銀行合併"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "連鎖擴張指生產無直接關係產品的企業合併。銀行合併屬於水平擴張。"
+  },
+  "econ_mcq_012": {
+    "topic": "07A-市場結構",
+    "difficulty": "簡單",
+    "question": "（DSE 2017）在寡頭壟斷市場中，廠商的主要特徵是：",
+    "options": [
+      "存在相互依存關係",
+      "面對一條水平的需求曲線",
+      "市場上只有一個賣家",
+      "產品完全同質"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "寡頭壟斷 (Oligopoly) 的特徵是少數大廠商主導，決策互相影響。"
+  },
+  "econ_mcq_013": {
+    "topic": "11B-公共財政",
+    "difficulty": "簡單",
+    "question": "普及銷售稅（GST）通常被視為一種：",
+    "options": [
+      "累進稅",
+      "累退稅",
+      "比例稅",
+      "直接稅"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "因為低收入人士的消費佔收入比例較高，銷售稅對其造成的稅務負擔較重，故為累退稅。"
+  },
+  "econ_mcq_014": {
+    "topic": "11B-公共財政",
+    "difficulty": "中等",
+    "question": "若政府出現預算赤字，表示：",
+    "options": [
+      "政府總開支大於總收入",
+      "政府借貸金額減少",
+      "經常帳出現盈餘",
+      "貨幣供應量必然下降"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "預算赤字即支出 (G) > 收入 (T)。"
+  },
+  "econ_mcq_015": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "中等",
+    "question": "若甲國生產一單位 X 的機會成本低於乙國，則甲國在 X 生產上具有：",
+    "options": [
+      "絕對優勢",
+      "比較優勢",
+      "規模經濟",
+      "完全優勢"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "比較優勢 (Comparative Advantage) 的定義即是生產某物品的機會成本較低。"
+  },
+  "econ_mcq_016": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "簡單",
+    "question": "（DSE 2020）下列哪項應記入香港國際收支平衡表（BOP）的經常帳內？",
+    "options": [
+      "香港居民購買英國國債",
+      "外地遊客在港購買珠寶的金額",
+      "外商來港投資工廠的資金",
+      "香港外匯儲備的變動"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "遊客消費屬於無形貿易（服務）出口，屬經常帳。其餘屬金融帳。"
+  },
+  "econ_mcq_017": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "簡單",
+    "question": "貨幣的哪項職能能解決「慾望巧合」的問題？",
+    "options": [
+      "交易媒介",
+      "價值儲存",
+      "計帳單位",
+      "延期支付標準"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "作為交易媒介可直接換取所需物品，不需要雙方慾望剛好契合。"
+  },
+  "econ_mcq_018": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "中等",
+    "question": "若法定存款準備金率為 10%，最初存款為 $1000，且無現金流失，則最大可能貨幣供應量（存款總額）為：",
+    "options": [
+      "$10,000",
+      "$9,000",
+      "$1,100",
+      "$100"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "銀行乘數 = 1 / 10% = 10。總存款 = $1000 * 10 = $10,000。"
+  },
+  "econ_mcq_019": {
+    "topic": "01A-選擇、機會成本與利息",
+    "difficulty": "中等",
+    "question": "（DSE 2013）稀少性（Scarcity）是指：",
+    "options": [
+      "資源不足以滿足人類無限的慾望",
+      "某些資源非常昂貴",
+      "只有在窮國才存在的現象",
+      "某貨品的供應減少"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "稀少性是經濟學的基本問題，指相對慾望而言，資源是有限的。"
+  },
+  "econ_mcq_020": {
+    "topic": "05A-市場干預",
+    "difficulty": "困難",
+    "question": "若政府設定價格下限（Price Floor）低於均衡價格，則：",
+    "options": [
+      "會出現超額供應",
+      "會出現超額需求",
+      "對市場沒有實際影響",
+      "價格會上升至下限水平"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "無效的價格下限。因為市場原本的價格就高於要求，故不受約束。"
+  },
+  "econ_mcq_021": {
+    "topic": "09A-失業與就業不足",
+    "difficulty": "中等",
+    "question": "以下哪項會導致失業率上升？",
+    "options": [
+      "退休人士決定重新尋找工作但尚未獲聘",
+      "家庭主婦決定留在家中照顧孩子",
+      "學生畢業後立即獲得工作",
+      "全職僱員轉為半職僱員"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "退休人士找工作代表進入勞動人口且處於失業狀態，增加失業人數。選項 B 屬於離開勞動人口。"
+  },
+  "econ_mcq_022": {
+    "topic": "09B-一般物價水平及通脹",
+    "difficulty": "簡單",
+    "question": "通縮（Deflation）是指：",
+    "options": [
+      "一般物價水平持續下降",
+      "經濟增長放緩",
+      "失業率上升",
+      "貨幣價值下降"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "通縮是通脹率為負值，即物價水平下降。"
+  },
+  "econ_mcq_023": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "簡單",
+    "question": "下列哪種生產要素的報酬稱為「薪金」？",
+    "options": [
+      "土地",
+      "勞力",
+      "資本",
+      "企業才具"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "勞力的報酬是薪金（Wages/Salary）。企業才具是利潤。"
+  },
+  "econ_mcq_024": {
+    "topic": "07A-市場結構",
+    "difficulty": "中等",
+    "question": "在完全競爭市場中，個別廠商是：",
+    "options": [
+      "價格制定者",
+      "價格接受者",
+      "市場領導者",
+      "唯一的生產者"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "完全競爭廠商產量極小，無法影響市價，只能接受市價。"
+  },
+  "econ_mcq_025": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "中等",
+    "question": "實施進口關稅會導致：",
+    "options": [
+      "進口貨價格下降",
+      "本國消費者盈餘增加",
+      "本國生產者盈餘增加",
+      "貿易量增加"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "關稅保護本地產業，使其能以較高價格售出更多，增加生產者盈餘。"
+  },
+  "econ_mcq_026": {
+    "topic": "02A-物品與產權",
+    "difficulty": "簡單",
+    "question": "私有產權（Private Property Rights）不包括以下哪項？",
+    "options": [
+      "排他的使用權",
+      "獲取收入的權利",
+      "轉讓權",
+      "絕對的破壞權"
+    ],
+    "correctOptionIndex": 3,
+    "explanation": "產權受到法律約束，並不包含不受限制的破壞權。"
+  },
+  "econ_mcq_027": {
+    "topic": "03A-需求與供應",
+    "difficulty": "中等",
+    "question": "若需求減少的幅度小於供應減少的幅度，均衡價格會：",
+    "options": [
+      "上升",
+      "下降",
+      "不變",
+      "不確定"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "供應減少使價格上升，需求減少使價格下降。供應減少幅度較大，故價格最終上升。"
+  },
+  "econ_mcq_028": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "困難",
+    "question": "「收益遞減定律」只適用於：",
+    "options": [
+      "長期生產",
+      "短期生產",
+      "只有夕陽工業",
+      "只有農業生產"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "收益遞減定律的前提是至少有一種要素（如廠房）是固定的，即短期生產。"
+  },
+  "econ_mcq_029": {
+    "topic": "11B-公共財政",
+    "difficulty": "簡單",
+    "question": "香港的薪俸稅採用何種稅制？",
+    "options": [
+      "累進稅",
+      "累退稅",
+      "定額稅",
+      "中性稅"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "香港薪俸稅率隨收入階層上升，故具備累進特徵（雖然有標準稅率上限）。"
+  },
+  "econ_mcq_030": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "簡單",
+    "question": "下列哪項不是貨幣的特徵？",
+    "options": [
+      "易於攜帶",
+      "耐久性",
+      "普遍接受性",
+      "價值必須永遠保持不變"
+    ],
+    "correctOptionIndex": 3,
+    "explanation": "貨幣價值會隨物價變動，並非永遠不變。"
+  },
+  "econ_mcq_031": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "困難",
+    "question": "若一國出口貨品的價格上升速度高於進口貨品，其貿易條件（Terms of Trade）會：",
+    "options": [
+      "改善",
+      "惡化",
+      "不變",
+      "趨向 1"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "貿易條件 = 出口價格指數 / 進口價格指數。數值上升即改善。"
+  },
+  "econ_mcq_032": {
+    "topic": "10A-本地生產總值",
+    "difficulty": "簡單",
+    "question": "經濟學中，「投資」是指：",
+    "options": [
+      "在股票市場買入藍籌股",
+      "廠商增加資本財貨（如機器）的行為",
+      "在銀行開立定期存款戶口",
+      "購買政府債券"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "經濟學投資專指增加實體資本存量。其餘屬金融投資或儲蓄。"
+  },
+  "econ_mcq_033": {
+    "topic": "05A-市場干預",
+    "difficulty": "中等",
+    "question": "若政府提供補貼給生產者，消費者盈餘會：",
+    "options": [
+      "減少",
+      "增加",
+      "不變",
+      "視乎彈性"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "補貼使均衡價格下降，消費者能以更低價格購買，盈餘增加。"
+  },
+  "econ_mcq_034": {
+    "topic": "09B-一般物價水平及通脹",
+    "difficulty": "困難",
+    "question": "若本地生產總值平減指數（GDP Deflator）從 100 變為 110，表示該年：",
+    "options": [
+      "實質 GDP 增長 10%",
+      "名義 GDP 減少 10%",
+      "一般物價水平上升 10%",
+      "失業率上升 10%"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "平減指數反映一般物價水平的變動。"
+  },
+  "econ_mcq_035": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "中等",
+    "question": "有限公司相對於無限公司的最大優點是：",
+    "options": [
+      "股東負擔有限債務責任",
+      "手續簡單",
+      "利潤不需課稅",
+      "可以由一人全權管理"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "股東只需承擔其出資額度的損失，不會波及個人資產。"
+  },
+  "econ_mcq_036": {
+    "topic": "07A-市場結構",
+    "difficulty": "簡單",
+    "question": "壟斷競爭（Monopolistic Competition）市場中，產品通常是：",
+    "options": [
+      "完全同質",
+      "異質且有品牌區別",
+      "由政府統一定價",
+      "完全無替代品"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "這類市場存在許多小廠商，產品有細微差別（如洗髮精）。"
+  },
+  "econ_mcq_037": {
+    "topic": "11B-公共財政",
+    "difficulty": "中等",
+    "question": "下列哪項屬於直接稅？",
+    "options": [
+      "利得稅",
+      "煙草稅",
+      "博彩稅",
+      "關稅"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "直接稅由納稅人直接負擔，無法輕易轉嫁。利得稅是針對利潤徵收。"
+  },
+  "econ_mcq_038": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "中等",
+    "question": "在香港的聯繫匯率制度下，港元與哪種貨幣掛鉤？",
+    "options": [
+      "英鎊",
+      "歐元",
+      "美元",
+      "人民幣"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "香港實施聯繫匯率制度，固定在 1 美元兌 7.8 港元左右。"
+  },
+  "econ_mcq_039": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "困難",
+    "question": "若某國對出口貨品進行補貼，會導致：",
+    "options": [
+      "出口價格下降，出口量增加",
+      "進口價格上升",
+      "國內生產減少",
+      "貿易條件改善"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "補貼使出口商更具競爭力，降低外銷價格以搶占市場。"
+  },
+  "econ_mcq_040": {
+    "topic": "01A-選擇、機會成本與利息",
+    "difficulty": "簡單",
+    "question": "下列哪種行為體現了「利息」作為提早消費的代價？",
+    "options": [
+      "向銀行貸款買車",
+      "在銀行存錢換取回報",
+      "將金錢藏在床底",
+      "購買黃金保值"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "借錢者是為了提早獲得資源，利息是其支付的溢價。"
+  },
+  "econ_mcq_041": {
+    "topic": "05A-市場干預",
+    "difficulty": "簡單",
+    "question": "若政府對香菸徵稅，煙草商將大部分稅負轉嫁給消費者，這說明：",
+    "options": [
+      "需求彈性較低",
+      "供應彈性較低",
+      "需求彈性較高",
+      "稅率極高"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "需求越缺乏彈性（中毒深），消費者對加價越無力反抗，轉嫁越多。"
+  },
+  "econ_mcq_042": {
+    "topic": "09B-一般物價水平及通脹",
+    "difficulty": "簡單",
+    "question": "CPI 代表：",
+    "options": [
+      "消費券計劃",
+      "綜合消費物價指數",
+      "本地生產總值",
+      "投資回報率"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "Consumer Price Index，衡量生活成本。"
+  },
+  "econ_mcq_043": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "困難",
+    "question": "「內部規模經濟」發生在：",
+    "options": [
+      "整個行業擴張時",
+      "單一企業擴張其生產規模時",
+      "政府降低稅率時",
+      "消費者收入上升時"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "內部規模經濟是企業自身規模擴大導致的平均成本下降。"
+  },
+  "econ_mcq_044": {
+    "topic": "07A-市場結構",
+    "difficulty": "簡單",
+    "question": "下列哪項是「非價格競爭」的例子？",
+    "options": [
+      "打折促销",
+      "電視廣告",
+      "買一送一",
+      "減價戰"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "廣告是通過品牌建立競爭，非直接價格調控。"
+  },
+  "econ_mcq_045": {
+    "topic": "11B-公共財政",
+    "difficulty": "中等",
+    "question": "累進稅率下，當一個人的收入增加，其邊際稅率會：",
+    "options": [
+      "上升",
+      "下降",
+      "不變",
+      "降為零"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "累進稅 (Progressive Tax) 意味著更高收入部分適用更高稅率。"
+  },
+  "econ_mcq_046": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "困難",
+    "question": "若中央銀行在公開市場買入債券，貨幣供應會：",
+    "options": [
+      "增加",
+      "減少",
+      "不變",
+      "不確定"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "央行買債券是將錢注入市場（付錢給賣方），故貨幣供應增加。"
+  },
+  "econ_mcq_047": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "簡單",
+    "question": "實施「進口配額」的主要目的是：",
+    "options": [
+      "限制進口數量以保護本國產業",
+      "增加政府稅收",
+      "鼓勵全球自由貿易",
+      "降低本國物價"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "配額直接鎖定進口上限，保護國內生產商不受外來廉價貨品衝擊。"
+  },
+  "econ_mcq_048": {
+    "topic": "09B-一般物價水平及通脹",
+    "difficulty": "中等",
+    "question": "在一段時間內，名義利率為 5%，通脹率為 7%，實質利率為：",
+    "options": [
+      "12%",
+      "2%",
+      "-2%",
+      "0.7%"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "實質利率 = 名義利率 - 通脹率 = 5% - 7% = -2%。"
+  },
+  "econ_mcq_049": {
+    "topic": "04A-價格彈性",
+    "difficulty": "困難",
+    "question": "若需求彈性等於 0，供應增加會導致：",
+    "options": [
+      "均衡價格不變",
+      "均衡產量不變",
+      "總收入增加",
+      "價格大幅上升"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "需求完全缺乏彈性時，需求曲線是垂直的，供應無論如何變動，產量都由需求端鎖死。"
+  },
+  "econ_mcq_050": {
+    "topic": "09A-失業與就業不足",
+    "difficulty": "中等",
+    "question": "就業不足（Underemployment）是指：",
+    "options": [
+      "完全沒有工作的人",
+      "想工作但找不到工作的人",
+      "在職但工作時數少於其意願的人",
+      "正在尋找第一份工作的人"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "就業不足者已算作就業人口，但其勞動力未被充分利用。"
+  }
+,
+  "econ_mcq_051": {
+    "topic": "01A-選擇、機會成本與利息",
+    "difficulty": "簡單",
+    "question": "（DSE 2013）政府決定將一塊原本空置的官地用作興建公屋。興建該公屋的機會成本是：",
+    "options": [
+      "興建公屋的建築費用",
+      "該幅土地在其他可行用途中價值最高的一個",
+      "該幅土地的歷史購買價格",
+      "零，因為該土地原本是空置的"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "即使土地原本空置，但它具備其他潛在用途（如賣給發展商建私樓）。機會成本是放棄的選擇中價值最高者。"
+  },
+  "econ_mcq_052": {
+    "topic": "01A-選擇、機會成本與利息",
+    "difficulty": "中等",
+    "question": "（CE 2008）某人抽獎獲得一張不可轉售的主題公園門票。他決定請假一天去遊玩。他去遊玩的機會成本包括：",
+    "options": [
+      "門票的原價",
+      "門票的原價加上他當天放棄的工資",
+      "他當天放棄的工資",
+      "零，因為門票是免費的"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "門票不可轉售，代表放棄門票不會有金錢損失（門票的機會成本為零）。但他花費了一天的時間，這時間的最高替代價值（如工資）就是他遊玩的機會成本。"
+  },
+  "econ_mcq_053": {
+    "topic": "01A-選擇、機會成本與利息",
+    "difficulty": "中等",
+    "question": "（DSE 2017）若市場的名義利率（Nominal Interest Rate）上升，公眾持有現金的機會成本會：",
+    "options": [
+      "上升",
+      "下降",
+      "不變",
+      "視乎通脹率而定"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "持有現金意味著放棄了將錢存入銀行賺取利息的機會。當名義利率上升，放棄的潛在利息回報增加，故持有現金的機會成本上升。"
+  },
+  "econ_mcq_054": {
+    "topic": "02A-物品的分類",
+    "difficulty": "簡單",
+    "question": "（CE 2005）經濟物品（Economic Good）的定義是：",
+    "options": [
+      "必須用金錢購買的物品",
+      "數量多於人們慾望的物品",
+      "生產時需要付出機會成本的物品",
+      "由政府提供的物品"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "經濟物品是指其供應量不足以滿足人類所有慾望的物品。因此，要獲得或生產它，就必須放棄其他東西，即涉及機會成本。"
+  },
+  "econ_mcq_055": {
+    "topic": "02A-物品的分類",
+    "difficulty": "中等",
+    "question": "（DSE 2016）「公海裏的魚」通常會面對過度捕撈的問題，這主要與以下哪一項產權特徵缺失有關？",
+    "options": [
+      "轉讓權",
+      "排他性使用權",
+      "獲取收入的權利",
+      "不可分割性"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "公海裡的魚缺乏排他性產權（任何人都可以去捕撈，無法排除他人）。這導致「公共財產悲劇」，每個人都爭相捕撈，最終導致過度消耗。"
+  },
+  "econ_mcq_056": {
+    "topic": "03A-需求與供應",
+    "difficulty": "中等",
+    "question": "（DSE 2015）「由於市民健康意識提高，對有機蔬菜的需求增加；同時，政府對有機農場提供巨額補貼。」這會導致有機蔬菜的：",
+    "options": [
+      "均衡價格必然上升",
+      "均衡價格必然下降",
+      "均衡交易量必然增加",
+      "均衡交易量必然減少"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "需求增加（D右移）使 P↑, Q↑；補貼使供應增加（S右移），使 P↓, Q↑。兩者皆令數量增加，故交易量必然增加；但價格變動方向相反，最終價格升或降不確定。"
+  },
+  "econ_mcq_057": {
+    "topic": "03A-需求與供應",
+    "difficulty": "簡單",
+    "question": "（DSE 2014）羊肉與羊毛是「聯合供應 (Joint Supply)」的例子。若市場對羊肉的需求大幅增加，羊毛市場會出現什麼變化？",
+    "options": [
+      "供應增加，價格下降",
+      "供應減少，價格上升",
+      "需求增加，價格上升",
+      "需求減少，價格下降"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "對羊肉的需求增加會導致羊肉的生產/屠宰量增加。因為羊肉和羊毛是一起生產的，這會自動導致羊毛的供應增加（S右移），從而壓低羊毛的價格。"
+  },
+  "econ_mcq_058": {
+    "topic": "03A-需求與供應",
+    "difficulty": "困難",
+    "question": "（DSE 2020）若 X 物品的價格上升導致 Y 物品的需求減少，這表示 X 和 Y 是：",
+    "options": [
+      "替代品 (Substitutes)",
+      "輔助品 (Complements)",
+      "正常物品 (Normal Goods)",
+      "劣等物品 (Inferior Goods)"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "X 價格上升會令 X 的需求量減少。因為 Y 的需求也跟著減少，代表兩者是必須一起使用的輔助品（例如打印機與墨水）。"
+  },
+  "econ_mcq_059": {
+    "topic": "04A-價格彈性",
+    "difficulty": "中等",
+    "question": "（DSE 2018）若某主題公園的門票具有「彈性需求 (Elastic Demand)」，管理層為了增加門票的總收入，應該：",
+    "options": [
+      "提高門票價格",
+      "降低門票價格",
+      "保持價格不變",
+      "減少宣傳開支"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "需求彈性大於 1，代表降價所引發的需求量增加百分比，會大於價格下降的百分比。因此，減價能夠帶來更多的總收入 (TR = P x Q)。"
+  },
+  "econ_mcq_060": {
+    "topic": "04A-價格彈性",
+    "difficulty": "簡單",
+    "question": "（CE 2010）下列哪一項因素會令一種物品的供應彈性較低？",
+    "options": [
+      "生產該物品所需的資源非常普遍",
+      "生產該物品需要極長的生產週期",
+      "該物品容易儲存",
+      "廠商擁有大量的剩餘產能"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "生產週期越長（如農作物），廠商就越難在價格變動時迅速調整產量，因此供應彈性較低（Inelastic Supply）。"
+  },
+  "econ_mcq_061": {
+    "topic": "05A-市場干預",
+    "difficulty": "中等",
+    "question": "（DSE 2016）政府實施法定最低工資（有效價格下限）會導致低技術勞工市場出現：",
+    "options": [
+      "超額需求",
+      "超額供應（失業）",
+      "勞工短缺",
+      "均衡工資下降"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "最低工資設定在均衡水平之上，導致願意提供勞力的人數（供應）大於僱主願意聘請的人數（需求），造成超額供應，即失業。"
+  },
+  "econ_mcq_062": {
+    "topic": "05A-市場干預",
+    "difficulty": "困難",
+    "question": "（DSE 2019）若政府對一件貨品提供從量補貼 (Per-unit Subsidy)，而該貨品的需求完全具有彈性 (Perfectly Elastic Demand)。補貼的得益將由誰獲得？",
+    "options": [
+      "全數由消費者獲得",
+      "全數由生產者獲得",
+      "雙方平均分享",
+      "政府獲得"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "需求完全有彈性（水平線），市場價格不會改變。補貼使供應曲線向下移，生產者以原價賣出並額外獲得政府的全數補貼金額，故生產者獲得全數得益。"
+  },
+  "econ_mcq_063": {
+    "topic": "05A-市場干預",
+    "difficulty": "中等",
+    "question": "（DSE 2014）實施「配額 (Quota)」與徵收「關稅 (Tariff)」的主要分別是：",
+    "options": [
+      "配額會提高價格，關稅不會",
+      "配額能為政府帶來稅收，關稅不能",
+      "配額直接限制數量，即使需求增加進口量也不會超出配額",
+      "關稅只適用於出口，配額只適用於進口"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "配額設定了數量的絕對上限，供應曲線在配額處變為垂直；關稅只是提高成本，若需求強勁，進口量仍可能大幅上升。"
+  },
+  "econ_mcq_064": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "簡單",
+    "question": "（CE 2009）李先生是某有限公司的股東，該公司不幸破產並負債 100萬。李先生只投資了 10萬。他最多需要承擔多少債務？",
+    "options": [
+      "10萬",
+      "100萬",
+      "110萬",
+      "零，因為公司破產了"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "有限公司的股東享有「有限債務責任 (Limited Liability)」，其損失上限僅限於其投入的股本（10萬）。"
+  },
+  "econ_mcq_065": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "中等",
+    "question": "（DSE 2018）以下哪一項屬於「內部規模經濟 (Internal Economies of Scale)」？",
+    "options": [
+      "政府在工業區興建了一條新鐵路",
+      "某大型連鎖超市因大量入貨而獲得供應商的批發折扣",
+      "某地區的大學專門開設課程培訓該行業的人才",
+      "行業內資訊流通加快，減低了找尋供應商的成本"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "內部規模經濟是由於個別廠商自身規模擴大而帶來的平均成本下降（例如採購經濟、管理經濟）。其他選項屬於外部規模經濟（整個行業受惠）。"
+  },
+  "econ_mcq_066": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "困難",
+    "question": "（DSE 2015）邊際回報遞減定律 (Law of Diminishing Marginal Returns) 開始生效的轉捩點是：",
+    "options": [
+      "總產量開始下降時",
+      "平均產量開始下降時",
+      "邊際產量開始下降時",
+      "邊際產量變為負數時"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "該定律指出，當不斷將可變要素加入固定要素中，到某一點後，其「邊際產量 (Marginal Product)」會開始遞減。"
+  },
+  "econ_mcq_067": {
+    "topic": "07A-市場結構",
+    "difficulty": "中等",
+    "question": "（DSE 2017）下列哪一項是「壟斷性競爭 (Monopolistic Competition)」與「完全競爭 (Perfect Competition)」的共同特徵？",
+    "options": [
+      "產品完全同質",
+      "市場上只有少數賣家",
+      "廠商在長期不能賺取超額利潤",
+      "廠商是價格制定者"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "兩者都具有「自由進入及退出市場」的特徵，這保證了在長期內，任何超額利潤都會吸引新競爭者加入，最終使超額利潤降至零（只賺取正常利潤）。"
+  },
+  "econ_mcq_068": {
+    "topic": "07A-市場結構",
+    "difficulty": "中等",
+    "question": "（DSE 2021）寡頭壟斷 (Oligopoly) 市場中常見「價格僵固 (Price Rigidity)」的現象。這是因為廠商擔心：",
+    "options": [
+      "加價時對手不跟隨，減價時對手立刻跟隨",
+      "加價時對手跟隨，減價時對手不跟隨",
+      "政府會實施價格管制",
+      "會觸犯反壟斷法"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "這是折彎需求曲線 (Kinked Demand Curve) 模型的預測：若廠商加價，對手不跟，他會流失大量顧客；若減價，對手怕流失顧客而立刻跟隨減價，最終引發減價戰。故廠商傾向不變價格。"
+  },
+  "econ_mcq_069": {
+    "topic": "08A-效率、公平與界外效應",
+    "difficulty": "中等",
+    "question": "（DSE 2014）若一個市場存在「正面的界外效應 (Positive Externality)」，在沒有政府干預的情況下：",
+    "options": [
+      "邊際私人利益大於邊際社會利益",
+      "市場均衡產量會低於社會最適產量 (Under-production)",
+      "市場均衡產量會高於社會最適產量 (Over-production)",
+      "邊際私人成本會大於邊際社會成本"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "正面界外效應意味著 MSB > MPB。但自由市場只考慮 MPB = MPC，導致生產出來的數量少於社會最大利益所要求的產量（生產不足）。"
+  },
+  "econ_mcq_070": {
+    "topic": "08A-效率、公平與界外效應",
+    "difficulty": "簡單",
+    "question": "（CE 2008）政府為了減少負面界外效應（如工廠污染），最符合經濟效率的干預方法是：",
+    "options": [
+      "向工廠提供補貼",
+      "向工廠徵收相等於邊際外部成本的稅款",
+      "全面禁止該工廠運作",
+      "將工廠國有化"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "徵收庇古稅 (Pigouvian Tax) 能將外部成本內部化，使廠商的 MPC 提升至 MSC，從而自動將產量調整至社會最適水平。"
+  },
+  "econ_mcq_071": {
+    "topic": "09A-失業與就業不足",
+    "difficulty": "簡單",
+    "question": "（DSE 2019）大學畢業生在畢業後花費了三個月時間尋找第一份工作。這期間他屬於：",
+    "options": [
+      "摩擦性失業 (Frictional Unemployment)",
+      "結構性失業 (Structural Unemployment)",
+      "週期性失業 (Cyclical Unemployment)",
+      "非勞動人口"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "摩擦性失業是由於資訊不完全，求職者與職位空缺之間需要時間配對而產生的短暫失業。"
+  },
+  "econ_mcq_072": {
+    "topic": "09A-失業與就業不足",
+    "difficulty": "困難",
+    "question": "（DSE 2015）若政府延長失業救濟金的發放期限，這通常會導致：",
+    "options": [
+      "結構性失業率下降",
+      "週期性失業率下降",
+      "摩擦性失業率上升",
+      "勞動人口參與率必然下降"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "延長救濟金降低了失業人士尋找工作的急迫性，他們會花更長時間去尋找更理想的工作，這增加了職位配對的時間，導致摩擦性失業率上升。"
+  },
+  "econ_mcq_073": {
+    "topic": "09B-一般物價水平及通脹",
+    "difficulty": "中等",
+    "question": "（DSE 2021）若香港出現通貨緊縮 (Deflation)，下列哪一項的實際購買力會上升？",
+    "options": [
+      "政府發行的定息債券",
+      "按浮動利率支付的房貸",
+      "企業的實體廠房",
+      "商戶的庫存商品"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "通縮代表物價下跌，貨幣的購買力上升。收取固定利息或持有固定名義價值的資產（如定息債券、現金）的實質購買力會因而上升。"
+  },
+  "econ_mcq_074": {
+    "topic": "09B-一般物價水平及通脹",
+    "difficulty": "中等",
+    "question": "（DSE 2016）「鞋底成本 (Shoe-leather Costs)」是指：",
+    "options": [
+      "通脹使鞋子等必需品價格上升的負擔",
+      "商戶為更新價格標籤而付出的成本",
+      "市民為減少持有貶值的現金，而頻繁前往銀行提款所消耗的時間及精力",
+      "工會為爭取加薪而進行罷工的成本"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "在惡性通脹下，現金迅速貶值，市民傾向把錢存在銀行賺息保值，需要用錢時才去提取，這種頻繁奔波所耗費的成本被形象地稱為「鞋底成本」。"
+  },
+  "econ_mcq_075": {
+    "topic": "10A-本地生產總值",
+    "difficulty": "中等",
+    "question": "（DSE 2017）計算本地生產總值 (GDP) 時，為何不將政府支付的「綜合社會保障援助（綜援）」計算在內？",
+    "options": [
+      "因為這是一項隱含成本",
+      "因為它屬於轉移支付 (Transfer Payment)，並沒有涉及當期的新生產",
+      "因為它是從稅收中支出的",
+      "因為它屬於非市場活動"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "轉移支付只是財富在社會成員之間的重新分配，並沒有對應的當期貨品或服務的生產，為免誇大產出，不計入 GDP。"
+  },
+  "econ_mcq_076": {
+    "topic": "10A-本地生產總值",
+    "difficulty": "困難",
+    "question": "（DSE 2019）麵包廠向麵粉廠購入 $500 的麵粉，並製成麵包以 $1200 售予消費者。在「增值計算法 (Value-added Approach)」下，這對 GDP 的貢獻總額為：",
+    "options": [
+      "$500",
+      "$700",
+      "$1200",
+      "$1700"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "增值法是將各生產階段的增值相加：麵粉廠增值 $500 + 麵包廠增值 ($1200 - $500 = $700) = $1200。這與最終物品的銷售價值 ($1200) 必然相等。"
+  },
+  "econ_mcq_077": {
+    "topic": "10A-本地生產總值",
+    "difficulty": "中等",
+    "question": "（DSE 2020）以下哪一項會導致一國的 GDP 被高估（即高於其實際的國民福利）？",
+    "options": [
+      "義工提供的免費服務未被計算",
+      "工廠生產過程中產生了嚴重的空氣污染",
+      "主婦在家中煮飯的勞動價值未被計算",
+      "黑市交易極為頻繁"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "污染損害了社會福利，但 GDP 計算產出時並沒有扣除這些「負產品 (Bads)」。因此，包含高污染的 GDP 數字會高估實際的社會福利水平。"
+  },
+  "econ_mcq_078": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "簡單",
+    "question": "（DSE 2014）下列哪一項屬於貨幣定義中的「M1」？",
+    "options": [
+      "儲蓄存款",
+      "定期存款",
+      "公眾持有的法定紙幣及硬幣",
+      "大額可轉讓存款證"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "狹義貨幣供應 M1 = 公眾持有的法定貨幣 (Cp) + 活期存款 (DD)。"
+  },
+  "econ_mcq_079": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "中等",
+    "question": "（DSE 2018）若中央銀行調高商業銀行的法定儲備率 (Required Reserve Ratio)，會導致：",
+    "options": [
+      "貨幣乘數變大，最高貨幣供應增加",
+      "貨幣乘數變小，最高貨幣供應減少",
+      "銀行的超額儲備增加",
+      "市民的存款意慾下降"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "銀行乘數 = 1 / 法定儲備率。儲備率上升，乘數變小，銀行能貸出的款項減少，導致銀行體系創造存款的能力下降，最高貨幣供應減少。"
+  },
+  "econ_mcq_080": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "簡單",
+    "question": "（CE 2007）在沒有中央銀行的情況下，香港負責執行「最後貸款人 (Lender of Last Resort)」職能的機構是：",
+    "options": [
+      "香港上海匯豐銀行",
+      "香港金融管理局",
+      "財政司司長",
+      "香港銀行公會"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "香港金管局 (HKMA) 負責維持銀行體系穩定，並在銀行面臨流動性危機時提供緊急資金支持。"
+  },
+  "econ_mcq_081": {
+    "topic": "11B-公共財政",
+    "difficulty": "中等",
+    "question": "（DSE 2016）當經濟陷入衰退時，政府為刺激經濟而增加公共開支及減稅。這項政策被稱為：",
+    "options": [
+      "緊縮性貨幣政策",
+      "擴張性貨幣政策",
+      "緊縮性財政政策",
+      "擴張性財政政策 (Expansionary Fiscal Policy)"
+    ],
+    "correctOptionIndex": 3,
+    "explanation": "涉及政府開支 (G) 與稅收 (T) 的調整屬於財政政策。增加開支和減稅能刺激總需求，屬擴張性。"
+  },
+  "econ_mcq_082": {
+    "topic": "11B-公共財政",
+    "difficulty": "簡單",
+    "question": "（DSE 2019）以下哪一項稅收能最有效地縮窄社會的貧富懸殊（降低堅尼系數）？",
+    "options": [
+      "累進的薪俸稅",
+      "普及銷售稅",
+      "定額的牌照費",
+      "進口關稅"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "累進稅（收入越高，邊際稅率越高）能有效地將財富從高收入群體再分配，從而令稅後收入分配更平均。"
+  },
+  "econ_mcq_083": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "中等",
+    "question": "（DSE 2020）甲國生產一單位電腦的機會成本是 2 單位手機；乙國生產一單位電腦的機會成本是 4 單位手機。根據比較優勢定律：",
+    "options": [
+      "甲國應出口電腦，進口手機",
+      "甲國應出口手機，進口電腦",
+      "乙國應出口電腦，進口手機",
+      "兩國之間不會發生貿易"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "甲國生產電腦的機會成本（2部手機）低於乙國（4部手機）。因此甲國在生產電腦上有比較優勢，應專門生產並出口電腦。"
+  },
+  "econ_mcq_084": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "困難",
+    "question": "（DSE 2017）兩國進行貿易的「互利交換比率 (Mutually Beneficial Terms of Trade)」必須界乎於：",
+    "options": [
+      "兩國的絕對生產成本之間",
+      "兩國生產該物品的機會成本之間",
+      "兩國的通脹率之間",
+      "兩國的匯率之間"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "貿易條款只有落在雙方各自國內的機會成本之間，出口國才能以高於成本的價格賣出，進口國才能以低於自己生產的成本買入，達成雙贏。"
+  },
+  "econ_mcq_085": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "中等",
+    "question": "（DSE 2015）在香港的聯繫匯率制度下，當美元相對於英鎊升值時，這會導致香港出口到英國的貨品價格：",
+    "options": [
+      "變得更便宜，出口量增加",
+      "變得更昂貴，出口量減少",
+      "價格不變，出口量不變",
+      "變得更昂貴，出口量增加"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "港元與美元掛鉤。美元兌英鎊升值，等同於港元兌英鎊升值。英國人需要用更多的英鎊來換取同等數量的港元貨品，故香港貨品在英國變貴，出口減少。"
+  },
+  "econ_mcq_086": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "簡單",
+    "question": "（DSE 2021）「經常轉移 (Current Transfers)」在國際收支平衡表中應記錄在哪個帳目之下？",
+    "options": [
+      "資本帳",
+      "金融帳",
+      "經常帳",
+      "儲備資產"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "經常帳包含有形貿易、無形貿易、初次收入（投資收益）及二次收入（即經常轉移，如海外匯款、外國援助）。"
+  },
+  "econ_mcq_087": {
+    "topic": "03A-需求與供應",
+    "difficulty": "困難",
+    "question": "（DSE 2013）假設勞工市場原本處於均衡。如果政府引入輸入外勞計劃（增加供應），同時經濟起飛令勞工需求大增。若工資率最終上升了，這意味著：",
+    "options": [
+      "勞工供應增加的幅度大於需求增加的幅度",
+      "勞工需求增加的幅度大於供應增加的幅度",
+      "勞工需求缺乏彈性",
+      "勞工供應完全有彈性"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "供應增加會拉低工資，需求增加會推高工資。既然最終工資上升了，代表推高工資的力量（需求增加）大於拉低工資的力量（供應增加）。"
+  },
+  "econ_mcq_088": {
+    "topic": "08A-效率、公平與界外效應",
+    "difficulty": "簡單",
+    "question": "（CE 2010）「堅尼系數 (Gini Coefficient)」數值越接近 1，表示該地區的：",
+    "options": [
+      "經濟增長越快",
+      "失業率越高",
+      "收入分配越不平均",
+      "財政赤字越嚴重"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "堅尼系數範圍為 0 到 1。0 代表絕對平均，1 代表絕對不平均（所有財富集中於一人）。"
+  },
+  "econ_mcq_089": {
+    "topic": "10A-本地生產總值",
+    "difficulty": "中等",
+    "question": "（DSE 2016）李小姐今年購買了一手全新的本地豪宅。這筆支出在計算 GDP 時應歸入哪一個項目？",
+    "options": [
+      "私人消費開支 (C)",
+      "本地固定資本形成總額 (I)",
+      "政府消費開支 (G)",
+      "不計入 GDP，因為是資產轉移"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "購買「全新」住宅樓宇被視為一種投資行為，歸入本地固定資本形成總額 (Investment)。只有日常消耗品才計入消費 (C)。"
+  },
+  "econ_mcq_090": {
+    "topic": "07A-市場結構",
+    "difficulty": "中等",
+    "question": "（DSE 2014）下列哪一項是完全壟斷 (Monopoly) 廠商能長期維持超額利潤的主要原因？",
+    "options": [
+      "產品沒有任何差異",
+      "政府提供大量補貼",
+      "存在極高的進入市場障礙 (Barriers to Entry)",
+      "擁有無限的生產資源"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "進入市場的障礙（如專利、巨額資本要求、政府特許權）阻止了潛在競爭者進入市場瓜分利潤，使壟斷者得以在長期維持超額利潤。"
+  },
+  "econ_mcq_091": {
+    "topic": "04A-價格彈性",
+    "difficulty": "困難",
+    "question": "（DSE 2019）若某物品的供應完全缺乏彈性 (Perfectly Inelastic Supply)，當該物品的需求增加時，會導致：",
+    "options": [
+      "價格大幅上升，交易量不變",
+      "價格不變，交易量大幅增加",
+      "價格和交易量按相同比例上升",
+      "價格下降，交易量不變"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "供應完全缺乏彈性代表供應曲線是垂直的。需求增加（D右移）只會導致均衡價格被推高，但均衡交易量（由垂直供應線鎖死）保持不變。"
+  },
+  "econ_mcq_092": {
+    "topic": "11A-貨幣與銀行",
+    "difficulty": "中等",
+    "question": "（DSE 2020）以下哪一項行動會增加香港的貨幣基礎 (Monetary Base)？",
+    "options": [
+      "市民將手頭的現金存入商業銀行",
+      "商業銀行將過剩的現金存入金融管理局",
+      "金融管理局在市場上買入美元並沽出港元",
+      "市民提取大量現金"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "金管局買美元沽港元，等於將新的港元現金注入市場，這會直接增加貨幣基礎。市民存取款只改變貨幣在公眾與銀行間的比例，不影響基礎總量。"
+  },
+  "econ_mcq_093": {
+    "topic": "01A-選擇、機會成本與利息",
+    "difficulty": "簡單",
+    "question": "（CE 2006）經濟學所指的「稀少性 (Scarcity)」是一個：",
+    "options": [
+      "只存在於發展中國家的問題",
+      "可以透過科技進步完全解決的問題",
+      "相對的概念，指資源不足以滿足人類所有慾望",
+      "絕對的概念，指地球上的資源總量"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "稀少性是相對的，是指相對於人類無窮的慾望而言，資源總是有限的，這迫使我們必須作出選擇。"
+  },
+  "econ_mcq_094": {
+    "topic": "06A-廠商與生產",
+    "difficulty": "中等",
+    "question": "（DSE 2017）當一間廠商的長期平均成本 (LRAC) 隨著產量增加而下降時，這間廠商正處於：",
+    "options": [
+      "規模經濟 (Economies of Scale)",
+      "規模不經濟 (Diseconomies of Scale)",
+      "邊際回報遞增",
+      "邊際回報遞減"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "規模經濟是指在長期擴大生產規模時，單位平均成本下降的現象。邊際回報定律則是短期概念。"
+  },
+  "econ_mcq_095": {
+    "topic": "05A-市場干預",
+    "difficulty": "中等",
+    "question": "（DSE 2018）政府向生產者發放單位補貼，對生產者和消費者的得益分配取決於：",
+    "options": [
+      "補貼的總金額",
+      "市場的競爭程度",
+      "需求和供應的相對價格彈性",
+      "生產者的定價策略"
+    ],
+    "correctOptionIndex": 2,
+    "explanation": "補貼與稅收的轉嫁原理相同。哪一方的彈性較低（較不敏感、難以離開市場），哪一方就能獲得較大份額的補貼利益。"
+  },
+  "econ_mcq_096": {
+    "topic": "09B-一般物價水平及通脹",
+    "difficulty": "困難",
+    "question": "（DSE 2015）若名義工資的增長率為 2%，而同期的通脹率為 5%。該名工人的實質工資（購買力）會：",
+    "options": [
+      "上升 7%",
+      "下降 3%",
+      "上升 3%",
+      "下降 7%"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "實質變動率 ≈ 名義變動率 - 通脹率 = 2% - 5% = -3%。這表示工人的加薪幅度追不上通脹，實際購買力下降了。"
+  },
+  "econ_mcq_097": {
+    "topic": "12A-國際貿易與收支平衡",
+    "difficulty": "中等",
+    "question": "（CE 2011）若某國實施嚴格的外匯管制，限制市民兌換外幣的數量。這項措施最直接影響國際收支平衡表中的哪一個部分？",
+    "options": [
+      "有形貿易帳",
+      "無形貿易帳",
+      "經常轉移",
+      "金融帳"
+    ],
+    "correctOptionIndex": 3,
+    "explanation": "外匯管制限制了資金的跨國流動（如對外投資、資金撤離），因此最直接影響的是記錄資本與金融資產流動的金融帳。"
+  },
+  "econ_mcq_098": {
+    "topic": "03A-需求與供應",
+    "difficulty": "簡單",
+    "question": "（DSE 2021）「因為天氣惡劣導致咖啡豆失收，令咖啡的價格急升。這導致市民減少購買咖啡，轉而購買更多茶。」這顯示咖啡和茶是：",
+    "options": [
+      "替代品",
+      "輔助品",
+      "聯合供應",
+      "競爭性供應"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "咖啡價格上升，導致市民轉而增加對茶的需求，兩者能互相替代滿足提神的慾望，故為替代品。"
+  },
+  "econ_mcq_099": {
+    "topic": "08A-效率、公平與界外效應",
+    "difficulty": "中等",
+    "question": "（DSE 2016）政府提供免費的基礎教育，是因為教育會帶來：",
+    "options": [
+      "負面的生產界外效應",
+      "正面的消費界外效應",
+      "規模不經濟",
+      "自然壟斷"
+    ],
+    "correctOptionIndex": 1,
+    "explanation": "教育不僅使受教者獲益（私人利益），還能提升整體社會質素、降低犯罪率（外部利益）。因為 MSB > MPB，屬正面的消費界外效應，政府介入可避免生產不足。"
+  },
+  "econ_mcq_100": {
+    "topic": "10A-本地生產總值",
+    "difficulty": "困難",
+    "question": "（DSE 2018）以下哪一項會導致香港的本地生產總值 (GDP) 增加，但本地居民總收入 (GNI) 保持不變？",
+    "options": [
+      "外國勞工在香港的工資收入增加，並將全數匯回祖國",
+      "香港居民在海外的投資收益大幅增加",
+      "香港政府派發更多社會福利",
+      "本地企業的出口貨物數量大增"
+    ],
+    "correctOptionIndex": 0,
+    "explanation": "外勞在港工作創造了本地產值（GDP 增加）。但計算 GNI 時，需減去「支付予非本地居民的要素收益」（匯回祖國的工資），因此 GNI 不會增加。"
+  }
+}
