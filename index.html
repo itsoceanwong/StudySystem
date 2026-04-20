@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSE 溫習系統 Pro MAX (版面優化版)</title>
+    <title>DSE 溫習系統 Pro MAX (真題混合測驗版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { darkMode: 'class', theme: { extend: {} } }</script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -130,8 +130,11 @@
                     <button onclick="startQuiz('bookmarks')" class="mt-2 w-full bg-white text-orange-600 py-1.5 rounded font-bold text-sm hover:bg-gray-100 transition">溫習重點</button>
                 </div>
                 <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-5 text-white shadow-lg flex justify-between items-center md:col-span-3">
-                    <h3 class="font-bold">🔄 總複習 (重新挑戰全題庫)</h3>
-                    <button onclick="startQuiz('random-all')" class="bg-white text-teal-600 px-6 py-2 rounded-lg font-bold hover:bg-gray-100 transition">挑戰</button>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">🔄 總複習 (MCQ + LQ 綜合模擬測驗)</h3>
+                        <p class="text-xs opacity-90">隨機抽取該科目的選擇題與長問題，挑戰你的全面能力！</p>
+                    </div>
+                    <button onclick="startQuiz('random-all')" class="bg-white text-teal-600 px-6 py-2 rounded-lg font-bold hover:bg-gray-100 transition shadow">立即挑戰</button>
                 </div>
             </div>
             <h2 class="text-xl font-bold mb-4 border-b dark:border-gray-700 pb-2">🎯 按課題針對性溫習 (進度分析)</h2>
@@ -143,6 +146,7 @@
                 <div class="flex items-center space-x-3">
                     <span id="quiz-subject-badge" class="px-3 py-1 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm font-bold"></span>
                     <h3 id="question-topic-label" class="text-lg font-bold text-blue-600"></h3>
+                    <span id="quiz-type-badge" class="px-2 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300 rounded text-xs font-bold hidden"></span>
                 </div>
                 <div class="flex items-center space-x-3">
                     <span id="quiz-progress-text" class="text-sm font-bold"></span>
@@ -156,7 +160,7 @@
                 <p id="question-text" class="text-xl font-bold mb-8 leading-relaxed whitespace-pre-line"></p>
                 <div id="options-container" class="space-y-4"></div>
                 <div id="lq-container" class="hidden space-y-4">
-                    <textarea id="lq-answer-input" rows="5" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 rounded-xl p-4 outline-none"></textarea>
+                    <textarea id="lq-answer-input" rows="5" class="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 rounded-xl p-4 outline-none" placeholder="請寫下你的作答..."></textarea>
                     <button id="lq-show-ans-btn" onclick="showLQAnswer()" class="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold">顯示參考答案</button>
                 </div>
                 <div id="feedback-area" class="hidden mt-8 p-6 rounded-xl border-l-4">
@@ -484,22 +488,12 @@
                     maintainAspectRatio: false,
                     indexAxis: 'y',
                     scales: {
-                        x: {
-                            beginAtZero: true,
-                            max: 100,
-                            grid: { color: isDark ? '#374151' : '#e5e7eb' },
-                            ticks: { stepSize: 20 }
-                        },
-                        y: {
-                            grid: { display: false },
-                            ticks: { autoSkip: false, font: { size: 11 } }
-                        }
+                        x: { beginAtZero: true, max: 100, grid: { color: isDark ? '#374151' : '#e5e7eb' }, ticks: { stepSize: 20 } },
+                        y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11 } } }
                     },
                     plugins: {
                         legend: { display: false },
-                        tooltip: {
-                            callbacks: { label: function(context) { return ` 正確率: ${context.raw}%`; } }
-                        }
+                        tooltip: { callbacks: { label: function(context) { return ` 正確率: ${context.raw}%`; } } }
                     }
                 }
             });
@@ -522,6 +516,7 @@
             currentType = type;
             document.getElementById('dash-subject-name').innerText = SUBJECTS[currentSubjectId].name;
             document.getElementById('dash-type-name').innerText = type.toUpperCase();
+            // 在一般模式下，只讀取單一題型
             const snap = await db.ref(`problems/${currentSubjectId}/${type}`).once('value');
             currentProblems = snap.val() || {};
             await renderTopics(); showView('dashboard-view');
@@ -565,31 +560,53 @@
             return false;
         }
 
+        // 🌟 核心升級：混合題型抽取邏輯
         async function startQuiz(mode) {
             const subSnap = await db.ref(`submissions/${currentUser.uid}`).once('value');
             const userSubs = subSnap.val() || {};
             const bmSnap = await db.ref(`bookmarks/${currentUser.uid}`).once('value');
             const userBookmarks = bmSnap.val() || {};
-            let list = Object.entries(currentProblems).map(([id, p]) => ({ id, ...p }));
             
-            if (mode === 'random') list = list.filter(p => !userSubs[p.id]).sort(() => Math.random()-0.5).slice(0, 20);
-            else if (mode === 'random-all') list = list.sort(() => Math.random()-0.5).slice(0, 20);
-            else if (mode === 'mistakes') list = list.filter(p => userSubs[p.id] && !userSubs[p.id].isCorrect).sort(() => Math.random()-0.5);
-            else if (mode === 'bookmarks') list = list.filter(p => userBookmarks[p.id]).sort(() => Math.random()-0.5);
-            else list = list.filter(p => p.topic === mode);
+            let list = [];
+
+            if (mode === 'random-all') {
+                // 混合模式：同時抓取該科目的 MCQ 與 LQ
+                const allSnap = await db.ref(`problems/${currentSubjectId}`).once('value');
+                const allData = allSnap.val() || {};
+                let mixed = [];
+                if (allData.mcq) mixed = mixed.concat(Object.entries(allData.mcq).map(([id, p]) => ({ id, type: 'mcq', ...p })));
+                if (allData.lq) mixed = mixed.concat(Object.entries(allData.lq).map(([id, p]) => ({ id, type: 'lq', ...p })));
+                
+                list = mixed.sort(() => Math.random() - 0.5).slice(0, 20); // 洗牌並抽取 20 題
+                document.getElementById('question-topic-label').innerText = "總複習 (綜合模擬測驗)";
+            } else {
+                // 單一題型模式：使用 currentProblems
+                list = Object.entries(currentProblems).map(([id, p]) => ({ id, type: currentType, ...p }));
+                if (mode === 'random') list = list.filter(p => !userSubs[p.id]).sort(() => Math.random()-0.5).slice(0, 20);
+                else if (mode === 'mistakes') list = list.filter(p => userSubs[p.id] && !userSubs[p.id].isCorrect).sort(() => Math.random()-0.5);
+                else if (mode === 'bookmarks') list = list.filter(p => userBookmarks[p.id]).sort(() => Math.random()-0.5);
+                else list = list.filter(p => p.topic === mode);
+                document.getElementById('question-topic-label').innerText = mode === 'random' ? '隨機未答' : (mode === 'mistakes' ? '錯題重溫' : (mode === 'bookmarks' ? '⭐ 我的收藏' : mode));
+            }
 
             if(list.length === 0) { alert("沒有符合條件的題目！"); return; }
             currentQuizList = list; quizIndex = 0; sessionResults = new Array(list.length).fill(null);
-            document.getElementById('question-topic-label').innerText = mode;
             document.getElementById('quiz-subject-badge').innerText = SUBJECTS[currentSubjectId].name;
             document.getElementById('quiz-summary').classList.add('hidden');
             document.getElementById('quiz-content').classList.remove('hidden');
             saveQuizState(); renderQuestion(); showView('quiz-view');
         }
 
+        // 🌟 核心升級：動態介面切換
         async function renderQuestion() {
             const p = currentQuizList[quizIndex];
-            if(p.topic) document.getElementById('question-topic-label').innerText = p.topic;
+            
+            // 動態顯示目前的題型標籤 (MCQ / LQ)
+            const typeBadge = document.getElementById('quiz-type-badge');
+            const qType = p.type || currentType; 
+            typeBadge.innerText = qType === 'mcq' ? '選擇題' : '長問題';
+            typeBadge.classList.remove('hidden');
+
             document.getElementById('quiz-progress-text').innerText = `${quizIndex + 1} / ${currentQuizList.length}`;
             document.getElementById('question-text').innerText = p.question;
             const img = document.getElementById('question-image');
@@ -602,9 +619,12 @@
             document.getElementById('feedback-area').classList.add('hidden');
             document.getElementById('btn-prev').classList.toggle('hidden', quizIndex === 0);
             document.getElementById('btn-next').classList.add('hidden');
+            
             const mcq = document.getElementById('options-container');
             const lq = document.getElementById('lq-container');
-            if (currentType === 'mcq') {
+            
+            // 根據題目的真實類型切換介面
+            if (qType === 'mcq') {
                 mcq.classList.remove('hidden'); lq.classList.add('hidden'); mcq.innerHTML = '';
                 p.options.forEach((opt, idx) => {
                     const btn = document.createElement('button');
@@ -612,7 +632,11 @@
                     btn.innerHTML = `<span class="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-full mr-4 text-sm font-bold">${String.fromCharCode(65+idx)}</span><span>${opt}</span>`;
                     btn.onclick = () => checkMCQ(idx); mcq.appendChild(btn);
                 });
-            } else { mcq.classList.add('hidden'); lq.classList.remove('hidden'); document.getElementById('lq-answer-input').value = ""; document.getElementById('lq-show-ans-btn').classList.remove('hidden'); }
+            } else { 
+                mcq.classList.add('hidden'); lq.classList.remove('hidden'); 
+                document.getElementById('lq-answer-input').value = ""; 
+                document.getElementById('lq-show-ans-btn').classList.remove('hidden'); 
+            }
         }
 
         async function toggleBookmark() {
